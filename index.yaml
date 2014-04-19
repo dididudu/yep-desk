@@ -1,0 +1,66 @@
+indexes:
+- kind: Contact
+  properties:
+  - name: organisation
+  - name: nom
+
+- kind: Demande
+  properties:
+  - name: affecte
+  - name: reference
+
+- kind: Demande
+  properties:
+  - name: demandeur
+  - name: reference
+
+- kind: Imprimante
+  properties:
+  - name: utilisateur
+  - name: code
+
+- kind: Imprimante
+  properties:
+  - name: modele
+  - name: code
+
+- kind: Incident
+  properties:
+  - name: affecte
+  - name: reference
+
+- kind: Incident
+  properties:
+  - name: utilisateur
+  - name: reference
+
+- kind: MesureApplication
+  properties:
+  - name: application
+  - name: quand
+
+- kind: MesureApplication
+  properties:
+  - name: application
+  - name: quand
+    direction: desc
+
+- kind: Modele
+  properties:
+  - name: fabricant
+  - name: nom
+
+- kind: Modele
+  properties:
+  - name: type
+  - name: nom
+
+- kind: Ordinateur
+  properties:
+  - name: utilisateur
+  - name: code
+
+- kind: Ordinateur
+  properties:
+  - name: modele
+  - name: code
