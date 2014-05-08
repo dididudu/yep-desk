@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %} - Fonction {{ fonction.nom }}{% endblock %}
+
+{% block body %}
+
+ <h4>Fonction {{ fonction }}</h4>
+
+{% if user %}
+
+{% if fonction.description %}
+{% autoescape off %}{{ fonction.description }}{% endautoescape %}
+{% endif %}
+
+{% if admin %}
+<p class="submit"><a href="/editFonction?id={{ fonction.key.id }}">Editer</a></p>
+{% endif %}
+
+{% endif %}
+{% endblock %}

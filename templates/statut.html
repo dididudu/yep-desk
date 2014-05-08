@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %} - Statut {{ statut.nom }}{% endblock %}
+
+{% block body %}
+
+ <h4>Statut {{ statut.nom }}</h4>
+
+{% if user %}
+
+{% if statut.description %}
+{% autoescape off %}{{ statut.description }}{% endautoescape %}
+{% endif %}
+
+{% if admin %}
+<p class="submit"><a href="/editStatut?id={{ statut.key.id }}">Editer</a></p>
+{% endif %}
+
+{% endif %}
+{% endblock %}

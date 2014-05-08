@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %} - Etat d'incident {{ etat.nom }}{% endblock %}
+
+{% block body %}
+
+ <h4>Etat d'incident {{ etat.nom }}</h4>
+
+{% if user %}
+
+{% if etat.description %}
+{% autoescape off %}{{ etat.description }}{% endautoescape %}
+{% endif %}
+
+{% if admin %}
+<p class="submit"><a href="/editEtatIncident?id={{ etat.key.id }}">Editer</a></p>
+{% endif %}
+
+{% endif %}
+{% endblock %}

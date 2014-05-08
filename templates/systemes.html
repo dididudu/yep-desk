@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %} - Systemes d'exploitation{% endblock %}
+
+{% block body %}
+
+ <h4>Syst&egrave;mes d'exploitation</h4>
+
+{% if user %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Code</th>
+    <th>Nom</th>
+    <th>Description</th>
+    <th>&nbsp;</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for sys in systemes %}
+   <tr>
+    <td><a href="/systeme/{{ sys.key.id }}">{{ sys.code }}</a></td>
+    <td>{{ sys.nom }}</td>
+    <td>{{ sys.description }}</td>
+    <td><a href="/editSysteme?id={{ sys.key.id }}"><i class="icon-edit"></i></a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+ <br/>
+
+{% if admin %}
+ <form action="/addSysteme" method="post">
+  <table class="form">
+   <tr>
+    <td><label>Nom :</label></td>
+    <td><input name="nom" value=""/></td>
+    <td><input class="submit" type="submit" value="Enregistrer"/></td>
+   </tr>
+  </table>
+ </form>
+{% endif %}
+
+{% endblock %}

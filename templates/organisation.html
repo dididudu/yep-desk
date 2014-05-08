@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %} - Organisation {{ organisation.nom }}{% endblock %}
+
+{% block body %}
+
+ <h4>Organisation {{ organisation.nom }}</h4>
+
+ <p>&nbsp;</p>
+
+{% if user %}
+
+<div class="ink-tabs top"> <!-- Creates a tabbed view with top nav -->
+  <ul class="tabs-nav">
+    <li><a href="#item1">Informations</a></li>
+    <li><a href="#item2">Membres</a></li>
+    <li><a href="#item3">Ordinateurs</a></li>
+    <li><a href="#item4">Imprimantes</a></li>
+    </ul>
+
+    <div id="item1" class="tabs-content"> <!-- Item 1 -->
+{% if organisation.description %}
+{% autoescape off %}{{ organisation.description }}{% endautoescape %}
+{% endif %}
+{% if admin %}
+<p class="submit"><a href="/editOrganisation?id={{ organisation.key.id }}">Editer</a></p>
+{% endif %}
+    </div>
+
+    <div id="item2" class="tabs-content"> <!-- Item 2 -->
+{% if contacts %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr><th>Nom</th><th>Email</th><th>T&eacute;l&eacute;phone</th><th>&nbsp;</th></tr>
+  </thead>
+  <tbody>
+  {% for ct in contacts %}
+   <tr>
+    <td><a href="/contact/{{ ct.key.id }}">{{ ct.prenom }} {{ ct.nom }}</a></td>
+    <td>{{ ct.email }}</td>
+    <td>{{ ct.telephone }}</td>
+    <td><a href="/editContact?id={{ ct.key.id }}">Editer</a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+    </div>
+
+    <div id="item3" class="tabs-content"> <!-- Item 3 -->
+{% if ordinateurs %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr><th>Code</th><th>No s&eacute;rie</th><th>Mod&egrave;le</th><th>Statut</th><th>O.S.</th><th>&nbsp;</th></tr>
+  </thead>
+  <tbody>
+  {% for ord in ordinateurs %}
+   <tr>
+    <td><a href="/ordinateur/{{ ord.key.id }}">{{ ord.code }}</a></td>
+    <td>{{ ord.no_serie }}</td>
+    <td>{{ ord.modele }}</td>
+    <td>{{ ord.statut }}</td>
+    <td>{{ ord.systeme }}</td>
+    <td><a href="/editOrdinateur?id={{ ord.key.id }}">Editer</a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+    </div>
+
+    <div id="item4" class="tabs-content"> <!-- Item 4 -->
+{% if imprimantes %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr><th>Code</th><th>No s&eacute;rie</th><th>Mod&egrave;le</th><th>Statut</th><th>&nbsp;</th></tr>
+  </thead>
+  <tbody>
+  {% for imp in imprimantes %}
+   <tr>
+    <td><a href="/imprimante/{{ imp.key.id }}">{{ imp.code }}</a></td>
+    <td>{{ imp.no_serie }}</td>
+    <td>{{ imp.modele }}</td>
+    <td>{{ imp.statut }}</td>
+    <td><a href="/editImprimante?id={{ imp.key.id }}">Editer</a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+    </div>
+</div>
+
+
+{% endif %}
+{% endblock %}

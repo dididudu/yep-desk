@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %} - Ordinateurs{% endblock %}
+
+{% block body %}
+
+ <h4>Ordinateurs</h4>
+
+{% if user %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Code</th>
+    <th>No s&eacute;rie</th>
+    <th>Mod&egrave;le</th>
+    <th>Statut</th>
+    <th>O.S.</th>
+    <th>Utilisateur</th>
+    <th>&nbsp;</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for ordi in ordinateurs %}
+   <tr>
+    <td><a href="/ordinateur/{{ ordi.key.id }}">{{ ordi.code }}</a></td>
+    <td>{{ ordi.no_serie }}</td>
+    <td><a href="/modele/{{ ordi.modele.key.id }}">{{ ordi.modele.nom }}</a></td>
+    <td>{{ ordi.statut }}</td>
+    <td>{{ ordi.systeme.code }}</td>
+    <td>{% if ordi.utilisateur %}<a href="/contact/{{ ordi.utilisateur.key.id }}">{{ ordi.utilisateur }}</a>{% endif %}</td>
+    <td><a href="/editOrdinateur?id={{ ordi.key.id }}"><i class="icon-edit"></i></a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+ <br/>
+
+{% if admin %}
+ <form action="/addOrdinateur" method="post">
+  <table class="form">
+   <tr>
+    <td><label>Code :</label></td>
+    <td><input name="code" value="" size="4"/></td>
+    <td><label>Modele :</label></td>
+    <td>
+     <select name="modele">
+     {% for mod in modeles %}
+      <option value="{{ mod.key.id }}">{{ mod.nom }}</option>
+     {% endfor %}
+     </select>
+    </td>
+    <td><label>Statut :</label></td>
+    <td>
+     <select name="statut">
+     {% for sta in statuts %}
+      <option value="{{ sta.key.id }}">{{ sta.nom }}</option>
+     {% endfor %}
+     </select>
+    </td>
+    <td><input class="submit" type="submit" value="Enregistrer"/></td>
+   </tr>
+  </table>
+ </form>
+{% endif %}
+
+{% endblock %}

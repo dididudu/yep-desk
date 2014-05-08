@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %} - Incidents{% endblock %}
+
+{% block body %}
+
+ <h4>Incidents</h4>
+
+{% if user %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>R&eacute;f&eacute;rence</th>
+    <th>Etat</th>
+    <th>Cat&eacute;gorie</th>
+    <th>Utilisateur</th>
+    <th>R&eacute;sum&eacute;</th>
+    <th>&nbsp;</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for inc in incidents %}
+   <tr>
+    <td><a href="/incident/{{ inc.key.id }}">{{ inc.reference }}</a></td>
+    <td>{{ inc.etat }}</td>
+    <td>{{ inc.categorie }}</td>
+    <td>{% if inc.utilisateur %}<a href="/contact/{{ inc.utilisateur.key.id }}">{{ inc.utilisateur }}</a>{% endif %}</td>
+    <td>{{ inc.resume }}</td>
+    <td><a href="/editIncident?id={{ inc.key.id }}"><i class="icon-edit"></i></a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+ <br/>
+
+{% if admin %}
+ <form action="/addIncident" method="post">
+  <table class="form">
+   <tr>
+    <td><label>Reference :</label></td>
+    <td><input name="reference" value="" size="4"/></td>
+    <td><input class="submit" type="submit" value="Enregistrer"/></td>
+   </tr>
+  </table>
+ </form>
+{% endif %}
+
+{% endblock %}

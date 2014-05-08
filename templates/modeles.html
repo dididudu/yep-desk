@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %} - Modeles{% endblock %}
+
+{% block body %}
+
+ <h4>Mod&egrave;les de mat&eacute;riel</h4>
+
+{% if user %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Nom</th>
+    <th>Fabricant</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>&nbsp;</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for mod in modeles %}
+   <tr>
+    <td><a href="/modele/{{ mod.key.id }}">{{ mod.nom }}</a></td>
+    <td><a href="/fabricant/{{ mod.fabricant.key.id }}">{{ mod.fabricant.nom }}</a></td>
+    <td>{{ mod.type }}</td>
+    <td>{{ mod.description }}</td>
+    <td><a href="/editModele?id={{ mod.key.id }}"><i class="icon-edit"></i></a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+ <br/>
+
+{% if admin %}
+ <form action="/addModele" method="post">
+  <table class="form">
+   <tr>
+    <td><label>Nom :</label></td>
+    <td><input name="nom" value=""/></td>
+    <td><label>Nom :</label></td>
+    <td>
+     <select name="type">
+      <option>Ordinateur fixe</option>
+      <option>Ordinateur portable</option>
+      <option>Tablette</option>
+      <option>Imprimante</option>
+     </select>
+    </td>
+    <td><label>Fabricant :</label></td>
+    <td>
+     <select name="fabricant">
+     {% for fab in fabricants %}
+      <option value="{{ fab.key.id }}">{{ fab.nom }}</option>
+     {% endfor %}
+     </select>
+    </td>
+    <td><input class="submit" type="submit" value="Enregistrer"/></td>
+   </tr>
+  </table>
+ </form>
+{% endif %}
+
+{% endblock %}

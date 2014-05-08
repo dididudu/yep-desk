@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %} - Import{% endblock %}
+
+{% block body %}
+
+ <h4>Import de mat&eacute;riel</h4>
+
+  <form method="post" class="ink-form" action="/check_import">
+
+    <fieldset class="column-group gutters">
+
+      <div class="control-group large-100 medium-100 small-100">
+        <label for="donnees">Donn&eacute;es &agrave; importer (code;no serie;modele)</label>
+        <div class="control">
+          <textarea id="donnees" name="donnees" rows="8"></textarea>
+        </div>
+      </div>
+
+        <div class="large-100 push-center">
+          <input type="submit" value="Importer" />
+        </div>
+
+    </fieldset>
+
+
+  </form>
+
+{% endblock %}

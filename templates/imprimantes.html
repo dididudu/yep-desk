@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %} - Imprimantes{% endblock %}
+
+{% block body %}
+
+ <h4>Imprimantes</h4>
+
+{% if user %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Code</th>
+    <th>No s&eacute;rie</th>
+    <th>Mod&egrave;le</th>
+    <th>Statut</th>
+    <th>Utilisateur</th>
+    <th>&nbsp;</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for imp in imprimantes %}
+   <tr>
+    <td><a href="/imprimante/{{ imp.key.id }}">{{ imp.code }}</a></td>
+    <td>{{ imp.no_serie }}</td>
+    <td><a href="/modele/{{ imp.modele.key.id }}">{{ imp.modele.nom }}</a></td>
+    <td>{{ imp.statut }}</td>
+    <td>{% if imp.utilisateur %}<a href="/contact/{{ imp.utilisateur.key.id }}">{{ imp.utilisateur }}</a>{% endif %}</td>
+    <td><a href="/editImprimante?id={{ imp.key.id }}"><i class="icon-edit"></i></a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+ <br/>
+
+{% if admin %}
+ <form action="/addImprimante" method="post">
+  <table class="form">
+   <tr>
+    <td><label>Code :</label></td>
+    <td><input name="code" value="" size="4"/></td>
+    <td><label>Modele :</label></td>
+    <td>
+     <select name="modele">
+     {% for mod in modeles %}
+      <option value="{{ mod.key.id }}">{{ mod.nom }}</option>
+     {% endfor %}
+     </select>
+    </td>
+    <td><label>Statut :</label></td>
+    <td>
+     <select name="statut">
+     {% for sta in statuts %}
+      <option value="{{ sta.key.id }}">{{ sta.nom }}</option>
+     {% endfor %}
+     </select>
+    </td>
+    <td><input class="submit" type="submit" value="Enregistrer"/></td>
+   </tr>
+  </table>
+ </form>
+{% endif %}
+
+{% endblock %}

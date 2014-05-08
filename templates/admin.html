@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block body %}
+ <p>&nbsp;</p>
+ <ul>
+  {% if admin %}
+  <li><a href="/fonctions">Fonctions</a></li>
+  <li><a href="/etatsDemande">Etats de demande</a></li>
+  <li><a href="/etatsIncident">Etats d'incident</a></li>
+  <li><a href="/categoriesDemande">Cat&eacute;gories de demande</a></li>
+  <li><a href="/categoriesIncident">Cat&eacute;gories d'incident</a></li>
+  <li><a href="/modeles">Mod&egrave;les de mat&eacute;riel</a></li>
+  <li><a href="/fabricants">Fabricants</a></li>
+  <li><a href="/statuts">Statuts de mat&eacute;riel</a></li>
+  <li><a href="/systemes">Syst&egrave;mes d'exploitation</a></li>
+  {% endif %}
+ </ul>
+ <p>&nbsp;</p>
+{% endblock %}

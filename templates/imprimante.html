@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %} - Imprimante {{ imprimante.code }}{% endblock %}
+
+{% block body %}
+
+ <h4>Imprimante {{ imprimante.code }}</h4>
+
+ <p>&nbsp;</p>
+
+{% if user %}
+
+  <div class="ink-grid">
+
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>No s&eacute;rie</label> : {{ imprimante.no_serie }}</div>
+      <div class="large-50 medium-50 small-100"><label>Statut</label> : {{ imprimante.statut }}</div>
+    </div>
+
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>Mod&egrave;le</label> : <a href="/modele/{{ imprimante.modele.key.id }}">{{ imprimante.modele.nom }}</a></div>
+      <div class="large-50 medium-50 small-100"><label>Fabricant</label> : <a href="/fabricant/{{ imprimante.modele.fabricant.key.id }}">{{ imprimante.modele.fabricant.nom }}</a></div>
+    </div>
+
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>Utilisateur</label> : {% if imprimante.utilisateur %}<a href="/contact/{{ imprimante.utilisateur.key.id }}">{{ imprimante.utilisateur }}</a>{% endif %}</div>
+      <div class="large-50 medium-50 small-100"><label>Organisation</label> : {% if imprimante.organisation %}<a href="/organisation/{{ imprimante.organisation.key.id }}">{{ imprimante.organisation }}</a>{% endif %}</div>
+    </div>
+
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>Achat</label> : {{ imprimante.achat|date:"j/m/y" }}</div>
+      <div class="large-50 medium-50 small-100"><label>Garantie</label> : {{ imprimante.garantie }} mois</div>
+    </div>
+
+  </div>
+
+{% if admin %}
+<p class="submit"><a href="/editImprimante?id={{ imprimante.key.id }}">Editer</a></p>
+{% endif %}
+
+{% endif %}
+{% endblock %}

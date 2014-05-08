@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %} - Edition de groupe{% endblock %}
+
+{% block body %}
+
+ <h4>Edition de groupe</h4>
+
+{% if user %}
+
+    <form method="post" class="ink-form" action="{{ action }}">
+
+      <input type="hidden" name="_id" value="{{ id }}" />
+
+{% autoescape off %}
+
+      <fieldset class="column-group gutters">
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.nom.label }}
+          <div class="control">
+            {{ form.nom }}
+          </div>
+          {% if form.nom.errors %}<p class="tip">{{form.nom.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-100 medium-100 small-100">
+          {{ form.description.label }}
+          <div class="control">
+            {{ form.description }}
+          </div>
+        </div>
+
+      </fieldset>
+
+{% endautoescape %}
+
+      <input type="submit" value="Enregistrer" />
+
+   </form>
+
+{% endif %}
+
+{% endblock %}

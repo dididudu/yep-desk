@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %} - Categories de demande{% endblock %}
+
+{% block body %}
+
+ <h4>Cat&eacute;gories de demande</h4>
+
+{% if user %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Nom</th>
+    <th>Description</th>
+    <th>&nbsp;</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for cat in categories %}
+   <tr>
+    <td><a href="/categorieDemande/{{ cat.key.id }}">{{ cat.nom }}</a></td>
+    <td>{{ cat.description }}</td>
+    <td><a href="/editCategorieDemande?id={{ cat.key.id }}"><i class="icon-edit"></i></a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+ <br/>
+
+{% if admin %}
+ <form action="/addCategorieDemande" method="post">
+  <table class="form">
+   <tr>
+    <td><label>Nom :</label></td>
+    <td><input name="nom" value=""/></td>
+    <td><input class="submit" type="submit" value="Enregistrer"/></td>
+   </tr>
+  </table>
+ </form>
+{% endif %}
+
+{% endblock %}

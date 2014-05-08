@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %} - Application {{ application.nom }}{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data1 = google.visualization.arrayToDataTable([
+          ['Date', 'Dispo', 'Perfo'],
+  {% for mesure in mesures %}
+          ['{{ mesure.quand|date:"d/m/y" }}',  {{ mesure.dispo }}, {{ mesure.perfo }}],
+  {% endfor %}
+        ]);
+
+        var options1 = {
+          title: 'Suivi dispo et perfo pour {{ application.nom }}',
+          colors: ['blue', 'cyan'],
+          legend: {position: 'none'}
+        };
+
+        var chart1 = new google.visualization.LineChart(document.getElementById('chart1_div'));
+        chart1.draw(data1, options1);
+
+        var data2 = google.visualization.arrayToDataTable([
+          ['Date', 'Sessions'],
+  {% for mesure in mesures %}
+          ['{{ mesure.quand|date:"d/m/y" }}',  {{ mesure.nb_sessions }}],
+  {% endfor %}
+        ]);
+
+        var options2 = {
+          title: 'Suivi des sessions pour {{ application.nom }}',
+          colors: ['blue'],
+          legend: {position: 'none'}
+        };
+
+        var chart2 = new google.visualization.LineChart(document.getElementById('chart2_div'));
+        chart2.draw(data2, options2);
+      }
+    </script>
+{% endblock %}
+
+{% block body %}
+
+ <h4>Suivi de l'application {{ application }}</h4>
+
+{% if user %}
+
+ <h5>Suivi qualitatif</h5>
+
+ <div id="chart1_div" style="width: 1200px; height: 400px;"></div>
+
+ <h5>Suivi quantitatif</h5>
+
+ <div id="chart2_div" style="width: 1200px; height: 400px;"></div>
+
+{% endif %}
+
+{% endblock %}

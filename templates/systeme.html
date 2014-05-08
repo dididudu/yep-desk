@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %} - Systeme {{ systeme.nom }}{% endblock %}
+
+{% block body %}
+
+ <h4>Syst&egrave;me {{ systeme.nom }}</h4>
+
+{% if user %}
+
+{% if systeme.description %}
+{% autoescape off %}{{ systeme.description }}{% endautoescape %}
+{% endif %}
+
+{% if admin %}
+<p class="submit"><a href="/editSysteme?id={{ systeme.key.id }}">Editer</a></p>
+{% endif %}
+
+{% endif %}
+{% endblock %}

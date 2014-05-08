@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %} - Demande {{ demande.reference }}{% endblock %}
+
+{% block body %}
+
+ <h4>Demande {{ demande.reference }}</h4>
+
+ <p>&nbsp;</p>
+
+{% if user %}
+
+  <div class="ink-grid">
+
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>Cat&eacute;gorie</label> : {{ demande.categorie }}</div>
+      <div class="large-50 medium-50 small-100"><label>Etat</label> : {{ demande.etat }}</div>
+    </div>
+
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>Demandeur</label> : {% if demande.demandeur %}<a href="/contact/{{ demande.demandeur.key.id }}">{{ demande.demandeur }}</a>{% endif %}</div>
+      <div class="large-50 medium-50 small-100"><label>Ouvert le</label> : {{ demande.created|date:"j/m/y" }}</div>
+    </div>
+
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>Affect&eacute; &agrave;</label> : {% if demande.affecte %}<a href="/groupe/{{ demande.affecte.key.id }}">{{ demande.affecte }}</a>{% endif %}</div>
+      <div class="large-50 medium-50 small-100">&nbsp;</div>
+    </div>
+
+    <div class="column-group gutters">
+      <div class="large-100 medium-100 small-100"><label>R&eacute;sum&eacute;</label> : {{ demande.resume }}</div>
+    </div>
+
+    <div class="column-group gutters">
+      <div class="large-100 medium-100 small-100"><label>Description</label> :<br/>
+   {% if demande.description %}
+   {% autoescape off %}{{ demande.description }}{% endautoescape %}
+   {% endif %}
+      </div>
+    </div>
+
+  </div>
+
+{% if admin %}
+<p class="submit"><a href="/editDemande?id={{ demande.key.id }}">Editer</a></p>
+{% endif %}
+
+{% endif %}
+{% endblock %}

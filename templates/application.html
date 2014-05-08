@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %} - Application {{ application.nom }}{% endblock %}
+
+{% block body %}
+
+ <h4>Application {{ application }}</h4>
+
+ <p>&nbsp;</p>
+
+{% if user %}
+
+{% if not application.actif %}
+<p>Application retir&eacute;e du service.</p>
+{% endif %}
+
+{% if application.description %}
+{% autoescape off %}{{ application.description }}{% endautoescape %}
+{% endif %}
+
+{% if admin %}
+<p class="submit"><a href="/editApplication?id={{ application.key.id }}">Editer</a></p>
+{% endif %}
+
+{% if application.actif %}
+<table class="ink-table alternating hover">
+ <thead>
+  <tr>
+   <th>Date</th>
+   <th>Dispo.</th>
+   <th>Perfo.</th>
+   <th>Tps moy.</th>
+   <th>Trans.</th>
+   <th>Sessions</th>
+  </tr>
+ </thead>
+ <tbody>
+ {% for mesure in mesures %}
+  <tr>
+   <td>{{ mesure.quand|date:"d/m/y" }}</td>
+   <td align="right">{{ mesure.dispo }}</td>
+   <td align="right">{{ mesure.perfo }}</td>
+   <td align="right">{{ mesure.temps_moy }}&nbsp;s</td>
+   <td align="right">{{ mesure.nb_transactions }}</td>
+   <td align="right">{{ mesure.nb_sessions }}</td>
+  </tr>
+ {% endfor %}
+ </tbody>
+</table>
+{% endif %}
+
+{% if admin and application.actif %}
+ <form action="/addMesure" method="post">
+  <input type="hidden" name="id" value="{{ application.key.id }}" />
+  <table class="form">
+   <tr>
+    <td><label>Mesure :</label></td>
+    <td><input name="mesure" value=""/></td>
+    <td><input class="submit" type="submit" value="Enregistrer"/></td>
+   </tr>
+  </table>
+ </form>
+{% endif %}
+
+<a name="bottom">&nbsp;</a>
+
+{% endif %}
+{% endblock %}

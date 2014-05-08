@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %} - Edition de contact{% endblock %}
+
+
+{% block body %}
+
+ <h4>Edition de contact</h4>
+
+{% if user %}
+
+    <form method="post" class="ink-form" action="{{ action }}">
+
+      <input type="hidden" name="_id" value="{{ id }}" />
+
+{% autoescape off %}
+
+      <fieldset class="column-group gutters">
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.prenom.label }}
+          <div class="control">
+            {{ form.prenom }}
+          </div>
+          {% if form.prenom.errors %}<p class="tip">{{form.prenom.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.nom.label }}
+          <div class="control">
+            {{ form.nom }}
+          </div>
+          {% if form.nom.errors %}<p class="tip">{{form.nom.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.userid.label }}
+          <div class="control">
+            {{ form.userid }}
+          </div>
+          {% if form.userid.errors %}<p class="tip">{{form.userid.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.actif.label }}
+          <div class="control">
+            {{ form.actif }}
+          </div>
+          {% if form.actif.errors %}<p class="tip">{{form.actif.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.fonction.label }}
+          <div class="control">
+            {{ form.fonction }}
+          </div>
+          {% if form.fonction.errors %}<p class="tip">{{form.fonction.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.organisation.label }}
+          <div class="control">
+            {{ form.organisation }}
+          </div>
+          {% if form.organisation.errors %}<p class="tip">{{form.organisation.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.site.label }}
+          <div class="control">
+            {{ form.site }}
+          </div>
+          {% if form.site.errors %}<p class="tip">{{form.site.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.email.label }}
+          <div class="control">
+            {{ form.email }}
+          </div>
+          {% if form.email.errors %}<p class="tip">{{form.email.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.telephone.label }}
+          <div class="control">
+            {{ form.telephone }}
+          </div>
+          {% if form.telephone.errors %}<p class="tip">{{form.telephone.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-100 medium-100 small-100">
+          {{ form.description.label }}
+          <div class="control">
+            {{ form.description }}
+          </div>
+        </div>
+
+      </fieldset>
+
+{% endautoescape %}
+
+      <input type="submit" value="Enregistrer" />
+
+   </form>
+
+{% endif %}
+
+{% endblock %}

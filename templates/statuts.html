@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %} - Statuts{% endblock %}
+
+{% block body %}
+
+ <h4>Statuts de mat&eacute;riel</h4>
+
+{% if user %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Nom</th>
+    <th>Description</th>
+    <th>&nbsp;</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for stat in statuts %}
+   <tr>
+    <td><a href="/statut/{{ stat.key.id }}">{{ stat.nom }}</a></td>
+    <td>{{ stat.description }}</td>
+    <td><a href="/editStatut?id={{ stat.key.id }}"><i class="icon-edit"></i></a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+ <br/>
+
+{% if admin %}
+ <form action="/addStatut" method="post">
+  <table class="form">
+   <tr>
+    <td><label>Nom :</label></td>
+    <td><input name="nom" value=""/></td>
+    <td><input class="submit" type="submit" value="Enregistrer"/></td>
+   </tr>
+  </table>
+ </form>
+{% endif %}
+
+{% endblock %}

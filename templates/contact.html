@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %} - Contact {{ contact.prenom }} {{ contact.nom }}{% endblock %}
+
+{% block body %}
+
+ <h4>Contact {{ contact.prenom }} {{ contact.nom }}</h4>
+
+ <p>&nbsp;</p>
+
+{% if user %}
+
+<div class="ink-tabs top"> <!-- Creates a tabbed view with top nav -->
+  <ul class="tabs-nav">
+    <li><a href="#item0">Informations</a></li>
+    <li><a href="#item1">Demandes</a></li>
+    <li><a href="#item2">Incidents</a></li>
+    <li><a href="#item3">Ordinateurs</a></li>
+    <li><a href="#item4">Imprimantes</a></li>
+    </ul>
+
+    <div id="item0" class="tabs-content"> <!-- Item 0 -->
+
+  <div class="ink-grid">
+
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>Userid</label> : {{ contact.userid }}</div>
+      <div class="large-50 medium-50 small-100"><label>Fonction</label> : {{ contact.fonction }}</div>
+    </div>
+
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>Organisation</label> : {% if contact.organisation %}<a href="/organisation/{{ contact.organisation.key.id }}">{{ contact.organisation.nom }}</a>{% endif %}</div>
+      <div class="large-50 medium-50 small-100"><label>Site</label> : {% if contact.site %}<a href="/site/{{ contact.site.key.id }}">{{ contact.site.nom }}</a>{% endif %}</div>
+    </div>
+
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>Email</label> : {{ contact.email }}</div>
+      <div class="large-50 medium-50 small-100"><label>T&eacute;l&eacute;phone</label> : {{ contact.telephone }}</div>
+    </div>
+
+  </div> 
+
+{% if admin %}
+<p class="submit"><a href="/editContact?id={{ contact.key.id }}">Editer</a></p>
+{% endif %}
+
+    </div>
+
+    <div id="item1" class="tabs-content"> <!-- Item 1 -->
+
+{% if demandes %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr><th>R&eacute;f&eacute;rence</th><th>Etat</th><th>Cat&eacute;gorie</th><th>R&eacute;sum&eacute;</th><th>&nbsp;</th></tr>
+  </thead>
+  <tbody>
+  {% for dem in demandes %}
+   <tr>
+    <td><a href="/demande/{{ dem.key.id }}">{{ dem.reference }}</a></td>
+    <td>{{ dem.etat }}</td>
+    <td>{{ dem.categorie }}</td>
+    <td>{{ dem.resume }}</td>
+    <td><a href="/editDemandet?id={{ dem.key.id }}">Editer</a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+    </div>
+    <div id="item2" class="tabs-content"> <!-- Item 2 -->
+
+{% if incidents %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr><th>R&eacute;f&eacute;rence</th><th>Etat</th><th>Cat&eacute;gorie</th><th>R&eacute;sum&eacute;</th><th>&nbsp;</th></tr>
+  </thead>
+  <tbody>
+  {% for inc in incidents %}
+   <tr>
+    <td><a href="/incident/{{ inc.key.id }}">{{ inc.reference }}</a></td>
+    <td>{{ inc.etat }}</td>
+    <td>{{ inc.categorie }}</td>
+    <td>{{ inc.resume }}</td>
+    <td><a href="/editIncident?id={{ inc.key.id }}">Editer</a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+    </div>
+
+    <div id="item3" class="tabs-content">
+
+{% if ordinateurs %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr><th>Code</th><th>No s&eacute;rie</th><th>Mod&egrave;le</th><th>Statut</th><th>O.S.</th><th>&nbsp;</th></tr>
+  </thead>
+  <tbody>
+  {% for ord in ordinateurs %}
+   <tr>
+    <td><a href="/ordinateur/{{ ord.key.id }}">{{ ord.code }}</a></td>
+    <td>{{ ord.no_serie }}</td>
+    <td>{{ ord.modele }}</td>
+    <td>{{ ord.statut }}</td>
+    <td>{{ ord.systeme }}</td>
+    <td><a href="/editOrdinateur?id={{ ord.key.id }}">Editer</a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+    </div>
+
+    <div id="item4" class="tabs-content">
+
+{% if imprimantes %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr><th>Code</th><th>No s&eacute;rie</th><th>Mod&egrave;le</th><th>Statut</th><th>&nbsp;</th></tr>
+  </thead>
+  <tbody>
+  {% for imp in imprimantes %}
+   <tr>
+    <td><a href="/imprimante/{{ imp.key.id }}">{{ imp.code }}</a></td>
+    <td>{{ imp.no_serie }}</td>
+    <td>{{ imp.modele }}</td>
+    <td>{{ imp.statut }}</td>
+    <td><a href="/editImprimante?id={{ imp.key.id }}">Editer</a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+    </div>
+
+</div>
+
+{% endif %}
+{% endblock %}

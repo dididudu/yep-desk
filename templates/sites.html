@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %} - Sites{% endblock %}
+
+{% block body %}
+
+ <h4>Sites</h4>
+
+{% if user %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Nom</th>
+    <th>Adresse</th>
+    <th>&nbsp;</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for site in sites %}
+   <tr>
+    <td><a href="/site/{{ site.key.id }}">{{ site.nom }}</a></td>
+    <td>{{ site.adresse }}</td>
+    <td><a href="/editSite?id={{ site.key.id }}"><i class="icon-edit"></i></a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+ <br/>
+
+{% if admin %}
+ <form action="/addSite" method="post">
+  <table class="form">
+   <tr>
+    <td><label>Nom :</label></td>
+    <td><input name="nom" value=""/></td>
+    <td><input class="submit" type="submit" value="Enregistrer"/></td>
+   </tr>
+  </table>
+ </form>
+{% endif %}
+
+{% endblock %}

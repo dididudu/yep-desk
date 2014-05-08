@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %} - Fonctions{% endblock %}
+
+{% block body %}
+
+ <h4>Fonctions</h4>
+
+{% if user %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Nom</th>
+    <th>Description</th>
+    <th>&nbsp;</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for fct in fonctions %}
+   <tr>
+    <td><a href="/fonction/{{ fct.key.id }}">{{ fct.nom }}</a></td>
+    <td>{{ fct.description }}</td>
+    <td><a href="/editFonction?id={{ fct.key.id }}"><i class="icon-edit"></i></a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+ <br/>
+
+{% if admin %}
+ <form action="/addFonction" method="post">
+  <table class="form">
+   <tr>
+    <td><label>Nom :</label></td>
+    <td><input name="nom" value=""/></td>
+    <td><input class="submit" type="submit" value="Enregistrer"/></td>
+   </tr>
+  </table>
+ </form>
+{% endif %}
+
+{% endblock %}

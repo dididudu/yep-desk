@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %} - Fabricant {{ fabricant.nom }}{% endblock %}
+
+{% block body %}
+
+ <h4>Fabricant {{ fabricant }}</h4>
+
+{% if user %}
+
+{% if fabricant.description %}
+{% autoescape off %}{{ fabricant.description }}{% endautoescape %}
+{% endif %}
+
+{% if admin %}
+<p class="submit"><a href="/editFabricant?id={{ fabricant.key.id }}">Editer</a></p>
+{% endif %}
+
+{% if modeles %}
+ <h5>Modeles {{ fabricant }}</h5>
+
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr><th>Nom</th><th>Type</th><th>Description</th><th>&nbsp;</th></tr>
+  </thead>
+  <tbody>
+  {% for mod in modeles %}
+   <tr>
+    <td><a href="/modele/{{ mod.key.id }}">{{ mod.nom }}</a></td>
+    <td>{{ mod.type }}</td>
+    <td>{{ mod.description }}</td>
+    <td><a href="/editModele?id={{ mod.key.id }}">Editer</a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+{% endif %}
+{% endblock %}

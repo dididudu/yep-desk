@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block body %}
+ <p>&nbsp;</p>
+ <ul>
+  <li><a href="/applications">Applications</a></li>
+  <li><a href="/ordinateurs">Ordinateurs</a></li>
+  <li><a href="/imprimantes">Imprimantes</a></li>
+  {% if admin %}
+  <li><a href="/import">Import</a></li>
+
+  {% endif %}
+ </ul>
+ <p>&nbsp;</p>
+{% endblock %}

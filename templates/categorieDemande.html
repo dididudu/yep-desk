@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %} - Categorie de demande {{ categorie.nom }}{% endblock %}
+
+{% block body %}
+
+ <h4>Cat&eacute;gorie de demande {{ categorie.nom }}</h4>
+
+{% if user %}
+
+{% if categorie.description %}
+{% autoescape off %}{{ categorie.description }}{% endautoescape %}
+{% endif %}
+
+{% if admin %}
+<p class="submit"><a href="/editCategorieDemande?id={{ categorie.key.id }}">Editer</a></p>
+{% endif %}
+
+{% endif %}
+{% endblock %}

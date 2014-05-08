@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %} - Edition d'imprimante{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="/static/js/ink.min.js"></script>
+    <script type="text/javascript" src="/static/js/ink.datepicker.js"></script>
+    <script type="text/javascript" src="/static/js/autoload.js"></script>
+{% endblock %}
+
+{% block body %}
+
+ <h4>Edition d'imprimante</h4>
+
+{% if user %}
+
+    <form method="post" class="ink-form" action="{{ action }}">
+
+      <input type="hidden" name="_id" value="{{ id }}" />
+
+{% autoescape off %}
+
+      <fieldset class="column-group gutters">
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.code.label }}
+          <div class="control">
+            {{ form.code }}
+          </div>
+          {% if form.code.errors %}<p class="tip">{{form.code.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.no_serie.label }}
+          <div class="control">
+            {{ form.no_serie }}
+          </div>
+          {% if form.no_serie.errors %}<p class="tip">{{form.no_serie.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.statut.label }}
+          <div class="control">
+            {{ form.statut }}
+          </div>
+          {% if form.statut.errors %}<p class="tip">{{form.statut.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.modele.label }}
+          <div class="control">
+            {{ form.modele }}
+          </div>
+          {% if form.modele.errors %}<p class="tip">{{form.modele.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.utilisateur.label }}
+          <div class="control">
+            {{ form.utilisateur }}
+          </div>
+          {% if form.utilisateur.errors %}<p class="tip">{{form.utilisateur.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.organisation.label }}
+          <div class="control">
+            {{ form.organisation }}
+          </div>
+          {% if form.organisation.errors %}<p class="tip">{{form.organisation.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.achat.label }}
+          <div class="control">
+            <input id="achat" name="achat" type="text" value="{{ form.achat.data|date:"Y-m-d" }}" class="ink-datepicker">
+          </div>
+          {% if form.achat.errors %}<p class="tip">{{form.achat.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.garantie.label }}
+          <div class="control">
+            {{ form.garantie }}
+          </div>
+          {% if form.garantie.errors %}<p class="tip">{{form.garantie.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.maintenue.label }}
+          <div class="control">
+            {{ form.maintenue }}
+          </div>
+          {% if form.maintenue.errors %}<p class="tip">{{form.maintenue.errors}}</p>{% endif %}
+        </div>
+
+      </fieldset>
+
+{% endautoescape %}
+
+      <input type="submit" value="Enregistrer" />
+
+    </form>
+
+{% endif %}
+
+{% endblock %}

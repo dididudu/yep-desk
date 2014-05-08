@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %} - V&eacute;rification avant import{% endblock %}
+
+{% block body %}
+
+ <h4>V&eacute;rification avant import de mat&eacute;riel</h4>
+
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Code</th>
+    <th>No s&eacute;rie</th>
+    <th>Mod&egrave;le</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for mat in materiels %}
+   <tr>
+    <td>{{ mat.code }}</td>
+    <td>{{ mat.no_serie }}</td>
+    <td>{{ mat.modele }}</td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+
+ <form method="post" class="ink-form" action="/import_materiel">
+ {% for mat in materiels %}
+   <input type="hidden" name="code" value="{{ mat.code }}" />
+   <input type="hidden" name="no_serie" value="{{ mat.no_serie }}" />
+   <input type="hidden" name="modele" value="{{ mat.modele }}" />
+ {% endfor %}
+ <input type="submit" value="Confirmer" />
+ </form>
+
+{% endblock %}

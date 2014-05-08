@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %} - Demandes{% endblock %}
+
+{% block body %}
+
+ <h4>Demandes</h4>
+
+{% if user %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>R&eacute;f&eacute;rence</th>
+    <th>Etat</th>
+    <th>Cat&eacute;gorie</th>
+    <th>Demandeur</th>
+    <th>R&eacute;sum&eacute;</th>
+    <th>&nbsp;</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for dem in demandes %}
+   <tr>
+    <td><a href="/demande/{{ dem.key.id }}">{{ dem.reference }}</a></td>
+    <td>{{ dem.etat }}</td>
+    <td>{{ dem.categorie }}</td>
+    <td>{% if dem.demandeur %}<a href="/contact/{{ dem.demandeur.key.id }}">{{ dem.demandeur }}</a>{% endif %}</td>
+    <td>{{ dem.resume }}</td>
+    <td><a href="/editDemande?id={{ dem.key.id }}"><i class="icon-edit"></i></a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+ <br/>
+
+{% if admin %}
+ <form action="/addDemande" method="post">
+  <table class="form">
+   <tr>
+    <td><label>Reference :</label></td>
+    <td><input name="reference" value="" size="4"/></td>
+    <td><input class="submit" type="submit" value="Enregistrer"/></td>
+   </tr>
+  </table>
+ </form>
+{% endif %}
+
+{% endblock %}

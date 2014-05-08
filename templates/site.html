@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %} - Site {{ site.nom }}{% endblock %}
+
+{% block body %}
+
+ <h4>Site {{ site.nom }}</h4>
+
+{% if user %}
+
+{% if site.adresse %}
+{% autoescape off %}
+    <address>
+    <h6>{{ site.nom }}</h6>
+    <p>{{ site.adresse }}</p>
+    </address>
+{% endautoescape %}
+{% endif %}
+
+{% if admin %}
+<p class="submit"><a href="/editSite?id={{ site.key.id }}">Editer</a></p>
+{% endif %}
+
+{% endif %}
+{% endblock %}

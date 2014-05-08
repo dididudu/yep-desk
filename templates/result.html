@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %} - R&eacute;sultat d'import{% endblock %}
+
+{% block body %}
+
+ <h4>R&eacute;sultat d'import de mat&eacute;riel</h4>
+
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Code</th>
+    <th>No s&eacute;rie</th>
+    <th>Mod&egrave;le</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for mat in res %}
+   <tr>
+    {% for el in mat %}
+    <td>{{ el }}</td>
+    {% endfor %}
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+
+{% endblock %}

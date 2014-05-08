@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %} - Groupe {{ groupe.nom }}{% endblock %}
+
+{% block body %}
+
+ <h4>Groupe {{ groupe.nom }}</h4>
+
+{% if user %}
+
+{% if groupe.description %}
+{% autoescape off %}{{ groupe.description }}{% endautoescape %}
+{% endif %}
+
+{% if admin %}
+<p class="submit"><a href="/editGroupe?id={{ groupe.key.id }}">Editer</a></p>
+{% endif %}
+
+<div class="ink-tabs top"> <!-- Creates a tabbed view with top nav -->
+  <ul class="tabs-nav">
+    <li><a href="#item1">Incidents</a></li>
+    <li><a href="#item2">Demandes</a></li>
+    </ul>
+
+    <div id="item1" class="tabs-content">
+
+{% if incidents %}
+ <h5>Incidents {{ groupe }}</h5>
+
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr><th>R&eacute;f&eacute;rence</th><th>Etat</th><th>Cat&eacute;gorie</th><th>R&eacute;sum&eacute;</th><th>&nbsp;</th></tr>
+  </thead>
+  <tbody>
+  {% for inc in incidents %}
+   <tr>
+    <td><a href="/incident/{{ inc.key.id }}">{{ inc.reference }}</a></td>
+    <td>{{ inc.etat }}</td>
+    <td>{{ inc.categorie }}</td>
+    <td>{{ inc.resume }}</td>
+    <td><a href="/editIncident?id={{ inc.key.id }}">Editer</a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+    </div>
+
+    <div id="item2" class="tabs-content">
+
+{% if demandes %}
+ <h5>Demandes {{ groupe }}</h5>
+
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr><th>R&eacute;f&eacute;rence</th><th>Etat</th><th>Cat&eacute;gorie</th><th>R&eacute;sum&eacute;</th><th>&nbsp;</th></tr>
+  </thead>
+  <tbody>
+  {% for dem in demandes %}
+   <tr>
+    <td><a href="/demande/{{ dem.key.id }}">{{ dem.reference }}</a></td>
+    <td>{{ dem.etat }}</td>
+    <td>{{ dem.categorie }}</td>
+    <td>{{ dem.resume }}</td>
+    <td><a href="/editDemande?id={{ dem.key.id }}">Editer</a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+    </div>
+
+</div>
+
+{% endif %}
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %} - Edition d'incident{% endblock %}
+
+
+{% block body %}
+
+ <h4>Edition d'incident</h4>
+
+{% if user %}
+
+    <form method="post" class="ink-form" action="{{ action }}">
+
+      <input type="hidden" name="_id" value="{{ id }}" />
+
+{% autoescape off %}
+
+      <fieldset class="column-group gutters">
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.reference.label }}
+          <div class="control">
+            {{ form.reference }}
+          </div>
+          {% if form.reference.errors %}<p class="tip">{{form.reference.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.categorie.label }}
+          <div class="control">
+            {{ form.categorie }}
+          </div>
+          {% if form.categorie.errors %}<p class="tip">{{form.categorie.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.etat.label }}
+          <div class="control">
+            {{ form.etat }}
+          </div>
+          {% if form.etat.errors %}<p class="tip">{{form.etat.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.utilisateur.label }}
+          <div class="control">
+            {{ form.utilisateur }}
+          </div>
+          {% if form.utilisateur.errors %}<p class="tip">{{form.utilisateur.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.affecte.label }}
+          <div class="control">
+            {{ form.affecte }}
+          </div>
+          {% if form.affecte.errors %}<p class="tip">{{form.affecte.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-100 medium-100 small-100">
+          {{ form.resume.label }}
+          <div class="control">
+            {{ form.resume }}
+          </div>
+          {% if form.resume.errors %}<p class="tip">{{form.resume.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-100 medium-100 small-100">
+          {{ form.description.label }}
+          <div class="control">
+            {{ form.description }}
+          </div>
+        </div>
+
+      </fieldset>
+
+{% endautoescape %}
+
+      <input type="submit" value="Enregistrer" />
+
+    </form>
+
+{% endif %}
+
+{% endblock %}

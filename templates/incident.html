@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %} - Incident {{ incident.reference }}{% endblock %}
+
+{% block body %}
+
+ <h4>Incident {{ incident.reference }}</h4>
+
+ <p>&nbsp;</p>
+
+{% if user %}
+
+  <div class="ink-grid">
+
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>Cat&eacute;gorie</label> : {{ incident.categorie }}</div>
+      <div class="large-50 medium-50 small-100"><label>Etat</label> : {{ incident.etat }}</div>
+    </div>
+
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>Utilisateur</label> : {% if incident.utilisateur %}<a href="/contact/{{ incident.utilisateur.key.id }}">{{ incident.utilisateur }}</a>{% endif %}</div>
+      <div class="large-50 medium-50 small-100"><label>Ouvert le</label> : {{ incident.created|date:"j/m/y" }}</div>
+    </div>
+
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>Affect&eacute; &agrave;</label> : {% if incident.affecte %}<a href="/groupe/{{ incident.affecte.key.id }}">{{ incident.affecte }}</a>{% endif %}</div>
+      <div class="large-50 medium-50 small-100">&nbsp;</div>
+    </div>
+
+    <div class="column-group gutters">
+      <div class="large-100 medium-100 small-100"><label>R&eacute;sum&eacute;</label> : {{ incident.resume }}</div>
+    </div>
+
+    <div class="column-group gutters">
+      <div class="large-100 medium-100 small-100"><label>Description</label> :<br/>
+   {% if incident.description %}
+   {% autoescape off %}{{ incident.description }}{% endautoescape %}
+   {% endif %}
+      </div>
+    </div>
+
+  </div>
+
+{% if admin %}
+<p class="submit"><a href="/editIncident?id={{ incident.key.id }}">Editer</a></p>
+{% endif %}
+
+{% endif %}
+{% endblock %}

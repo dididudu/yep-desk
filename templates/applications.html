@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %} - Applications{% endblock %}
+
+{% block body %}
+
+ <h4>Applications</h4>
+
+{% if user %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Nom</th>
+    <th>Actif</th>
+    <th class="hide-small show-medium show-large">Description</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for app in applications %}
+   <tr>
+    <td><a href="/application/{{ app.key.id }}">{{ app.nom }}</a></td>
+    <td>{% if app.actif %}OUI{% else %}NON{% endif %}</td>
+    <td class="hide-small show-medium show-large">{% if app.description %}{{ app.description }}{% endif %}</td>
+    <td><a href="/application_charts/{{ app.key.id }}"><i class="icon-bar-chart"></i></a></td>
+    <td><a href="/editApplication?id={{ app.key.id }}"><i class="icon-edit"></i></a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+ <br/>
+
+{% if admin %}
+ <form action="/addApplication" method="post">
+  <table class="form">
+   <tr>
+    <td><label>Nom :</label></td>
+    <td><input name="nom" value=""/></td>
+    <td><input class="submit" type="submit" value="Enregistrer"/></td>
+   </tr>
+  </table>
+ </form>
+{% endif %}
+
+{% endblock %}

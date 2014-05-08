@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %} - Contacts{% endblock %}
+
+{% block body %}
+
+ <h4>Contacts</h4>
+
+{% if user %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Nom</th>
+    <th>Organisation</th>
+    <th>Email</th>
+    <th>T&eacute;l&eacute;phone</th>
+    <th>&nbsp;</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for ct in contacts %}
+   <tr>
+    <td><a href="/contact/{{ ct.key.id }}">{{ ct.prenom }} {{ ct.nom }}</a></td>
+    <td>{% if ct.organisation %}<a href="/organisation/{{ ct.organisation.key.id }}">{{ ct.organisation.nom }}</a>{% endif %}</td>
+    <td>{{ ct.email }}</td>
+    <td>{{ ct.telephone }}</td>
+    <td><a href="/editContact?id={{ ct.key.id }}"><i class="icon-edit"></i></a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+ <br/>
+
+{% if admin %}
+ <form action="/addContact" method="post">
+  <table class="form">
+   <tr>
+    <td><label>Prenom :</label></td>
+    <td><input name="prenom" value=""/></td>
+    <td><label>Nom :</label></td>
+    <td><input name="nom" value=""/></td>
+    <td><input class="submit" type="submit" value="Enregistrer"/></td>
+   </tr>
+  </table>
+ </form>
+{% endif %}
+
+{% endblock %}

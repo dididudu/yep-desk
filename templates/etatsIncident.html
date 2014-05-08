@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %} - Etats d'incident{% endblock %}
+
+{% block body %}
+
+ <h4>Etats d'incident</h4>
+
+{% if user %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Nom</th>
+    <th>Description</th>
+    <th>&nbsp;</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for etat in etats %}
+   <tr>
+    <td><a href="/etatIncident/{{ etat.key.id }}">{{ etat.nom }}</a></td>
+    <td>{{ etat.description }}</td>
+    <td><a href="/editEtatIncident?id={{ etat.key.id }}"><i class="icon-edit"></i></a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+ <br/>
+
+{% if admin %}
+ <form action="/addEtatIncident" method="post">
+  <table class="form">
+   <tr>
+    <td><label>Nom :</label></td>
+    <td><input name="nom" value=""/></td>
+    <td><input class="submit" type="submit" value="Enregistrer"/></td>
+   </tr>
+  </table>
+ </form>
+{% endif %}
+
+{% endblock %}

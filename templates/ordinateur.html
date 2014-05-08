@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %} - Ordinateur {{ ordinateur.code }}{% endblock %}
+
+{% block body %}
+
+ <h4>Ordinateur {{ ordinateur.code }}</h4>
+
+ <p>&nbsp;</p>
+
+{% if user %}
+
+  <div class="ink-grid">
+
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>No s&eacute;rie</label> : {{ ordinateur.no_serie }}</div>
+      <div class="large-50 medium-50 small-100"><label>Statut</label> : {{ ordinateur.statut }}</div>
+    </div>
+
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>Mod&egrave;le</label> : <a href="/modele/{{ ordinateur.modele.key.id }}">{{ ordinateur.modele.nom }}</a></div>
+      <div class="large-50 medium-50 small-100"><label>Fabricant</label> : <a href="/fabricant/{{ ordinateur.modele.fabricant.key.id }}">{{ ordinateur.modele.fabricant.nom }}</a></div>
+    </div>
+
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>O.S.</label> : {{ ordinateur.systeme }}</div>
+      <div class="large-50 medium-50 small-100">&nbsp;</div>
+    </div>
+
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>Utilisateur</label> : {% if ordinateur.utilisateur %}<a href="/contact/{{ ordinateur.utilisateur.key.id }}">{{ ordinateur.utilisateur }}</a>{% endif %}</div>
+      <div class="large-50 medium-50 small-100"><label>Organisation</label> : {% if ordinateur.organisation %}<a href="/organisation/{{ ordinateur.organisation.key.id }}">{{ ordinateur.organisation }}</a>{% endif %}</div>
+    </div>
+
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>Achat</label> : {{ ordinateur.achat|date:"j/m/y" }}</div>
+      <div class="large-50 medium-50 small-100"><label>Garantie</label> : {{ ordinateur.garantie }} mois</div>
+    </div>
+
+  </div> 
+
+{% if admin %}
+<p class="submit"><a href="/editOrdinateur?id={{ ordinateur.key.id }}">Editer</a></p>
+{% endif %}
+
+{% endif %}
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %} - Modele {{ modele.nom }}{% endblock %}
+
+{% block body %}
+
+ <h4>Mod&egrave;le {{ modele }}</h4>
+
+{% if user %}
+<p><label>Fabricant</label> : <a href="/fabricant/{{ modele.fabricant.key.id }}">{{ modele.fabricant.nom }}</a></p>
+<p><label>Type</label> : {{ modele.type }}</p>
+
+{% if modele.description %}
+{% autoescape off %}{{ modele.description }}{% endautoescape %}
+{% endif %}
+
+{% if admin %}
+<p class="submit"><a href="/editModele?id={{ modele.key.id }}">Editer</a></p>
+{% endif %}
+
+{% if modele.type != 'Imprimante' %}
+ <h5>Ordinateurs de ce mod&egrave;le</h5>
+
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr><th>Code</th><th>No s&eacute;rie</th><th>Statut</th><th>O.S.</th><th>&nbsp;</th></tr>
+  </thead>
+  <tbody>
+  {% for ord in ordinateurs %}
+   <tr>
+    <td><a href="/ordinateur/{{ ord.key.id }}">{{ ord.code }}</a></td>
+    <td>{{ ord.no_serie }}</td>
+    <td>{{ ord.statut }}</td>
+    <td>{{ ord.systeme }}</td>
+    <td><a href="/editOrdinateur?id={{ ord.key.id }}">Editer</a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+{% if modele.type = 'Imprimante' %}
+ <h5>Imprimantes de ce mod&egrave;le</h5>
+
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr><th>Code</th><th>No serie</th><th>Statut</th><th>&nbsp;</th></tr>
+  </thead>
+  <tbody>
+  {% for imp in imprimantes %}
+   <tr>
+    <td><a href="/imprimante/{{ imp.key.id }}">{{ imp.code }}</a></td>
+    <td>{{ imp.no_serie }}</td>
+    <td>{{ imp.statut }}</td>
+    <td><a href="/editImprimante?id={{ imp.key.id }}">Editer</a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+{% endif %}
+{% endblock %}
