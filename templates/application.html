@@ -4,7 +4,7 @@
 
 {% block body %}
 
- <h4>Application {{ application }}</h4>
+ <h4>Application {{ application.nom }}</h4>
 
  <p>&nbsp;</p>
 
@@ -59,6 +59,8 @@
 </table>
 {% endif %}
 
+<p>&nbsp;</p>
+
 {% if admin and application.actif %}
  <form action="/addMesure" method="post">
   <input type="hidden" name="id" value="{{ application.key.id }}" />
@@ -66,7 +68,7 @@
    <tr>
     <td><label>Mesure :</label></td>
     <td><input name="mesure" value=""/></td>
-    <td><input class="submit" type="submit" value="Enregistrer"/></td>
+    <td><input class="submit" type="submit" value="Ajouter"/></td>
    </tr>
   </table>
  </form>
@@ -76,9 +78,11 @@
   <div id="versions" class="tabs-content">
 <ul>
  {% for version in application.versions %}
-  <li>{{ version.numero }} : {{ version.commentaire }}</td>
+  <li><b>{{ application.nom }} {{ version.numero }}</b> : {{ version.commentaire }}</td>
  {% endfor %}
 </ul>
+
+<p>&nbsp;</p>
 
 {% if admin and application.actif %}
  <form action="/addVersionApplication" method="post">
@@ -87,7 +91,7 @@
    <tr>
     <td><label>Version :</label></td>
     <td><input name="numero" value=""/></td>
-    <td><input class="submit" type="submit" value="Enregistrer"/></td>
+    <td><input class="submit" type="submit" value="Ajouter"/></td>
    </tr>
   </table>
  </form>
