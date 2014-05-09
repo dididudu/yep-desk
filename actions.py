@@ -35,6 +35,7 @@ from models import Responsable
 from models import Site
 from models import Statut
 from models import SystemeExploitation
+from models import VersionApplication
 
 from forms import ApplicationForm
 from forms import CategorieDemandeForm
@@ -150,6 +151,34 @@ class AddApplication(webapp2.RequestHandler):
 
     logging.debug('Finish application adding')
     self.redirect('/applications')
+
+class AddVersionApplication(BaseRequestHandler):
+  def post(self):
+    logging.debug('Start version application adding request')
+    a = self.request.get('id')
+    n = self.request.get('numero')
+    obj = VersionApplication(numero=n,commentaire='...')
+    user = users.GetCurrentUser()
+    if user:
+      logging.info('Version application %s added by user %s' % (n, user.nickname()))
+      obj.created_by = user
+      obj.updated_by = user
+    else:
+      logging.info('Version application %s added by anonymous user' % n)
+
+    try:
+      i = int(a)
+      application = Application.get(db.Key.from_path('Application', i))
+      obj.application = application
+    except:
+      logging.error('There was an error retreiving application %s' % a)
+
+    try:
+      obj.put()
+    except:
+      logging.error('There was an error adding version application %s' % n)
+    logging.debug('Finish version application adding')
+    self.redirect('/application/%s' % a)
 
 class AddCategorieDemande(BaseRequestHandler):
   def post(self):

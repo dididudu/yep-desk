@@ -49,6 +49,12 @@
 </table>
 {% endif %}
 
+<ul>
+ {% for version in versions %}
+  <li>{{ version.numero }} : {{ version.commentaire }}</td>
+ {% endfor %}
+</ul>
+
 {% if admin and application.actif %}
  <form action="/addMesure" method="post">
   <input type="hidden" name="id" value="{{ application.key.id }}" />
@@ -56,6 +62,17 @@
    <tr>
     <td><label>Mesure :</label></td>
     <td><input name="mesure" value=""/></td>
+    <td><input class="submit" type="submit" value="Enregistrer"/></td>
+   </tr>
+  </table>
+ </form>
+
+ <form action="/addVersionApplication" method="post">
+  <input type="hidden" name="id" value="{{ application.key.id }}" />
+  <table class="form">
+   <tr>
+    <td><label>Version :</label></td>
+    <td><input name="numero" value=""/></td>
     <td><input class="submit" type="submit" value="Enregistrer"/></td>
    </tr>
   </table>
