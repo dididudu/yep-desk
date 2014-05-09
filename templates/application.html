@@ -10,18 +10,28 @@
 
 {% if user %}
 
-{% if not application.actif %}
-<p>Application retir&eacute;e du service.</p>
-{% endif %}
+<div class="ink-tabs top"> <!-- Creates a tabbed view with top nav -->
+  <ul class="tabs-nav">
+    <li><a href="#infos">Informations</a></li>
+    <li><a href="#mesures">Mesures</a></li>
+    <li><a href="#versions">Versions</a></li>
+  </ul>
 
-{% if application.description %}
-{% autoescape off %}{{ application.description }}{% endautoescape %}
-{% endif %}
+  <div id="infos" class="tabs-content">
+  {% if not application.actif %}
+  <p>Application retir&eacute;e du service.</p>
+  {% endif %}
 
-{% if admin %}
-<p class="submit"><a href="/editApplication?id={{ application.key.id }}">Editer</a></p>
-{% endif %}
+  {% if application.description %}
+  {% autoescape off %}{{ application.description }}{% endautoescape %}
+  {% endif %}
 
+  {% if admin %}
+  <p class="submit"><a href="/editApplication?id={{ application.key.id }}">Editer</a></p>
+  {% endif %}
+  </div>
+
+  <div id="mesures" class="tabs-content">
 {% if application.actif %}
 <table class="ink-table alternating hover">
  <thead>
@@ -49,12 +59,6 @@
 </table>
 {% endif %}
 
-<ul>
- {% for version in versions %}
-  <li>{{ version.numero }} : {{ version.commentaire }}</td>
- {% endfor %}
-</ul>
-
 {% if admin and application.actif %}
  <form action="/addMesure" method="post">
   <input type="hidden" name="id" value="{{ application.key.id }}" />
@@ -66,7 +70,17 @@
    </tr>
   </table>
  </form>
+{% endif %}
+  </div>
 
+  <div id="versions" class="tabs-content">
+<ul>
+ {% for version in application.versions %}
+  <li>{{ version.numero }} : {{ version.commentaire }}</td>
+ {% endfor %}
+</ul>
+
+{% if admin and application.actif %}
  <form action="/addVersionApplication" method="post">
   <input type="hidden" name="id" value="{{ application.key.id }}" />
   <table class="form">
@@ -78,6 +92,9 @@
   </table>
  </form>
 {% endif %}
+  </div>
+
+</div>
 
 <a name="bottom">&nbsp;</a>
 
