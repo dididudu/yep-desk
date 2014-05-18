@@ -85,6 +85,7 @@ from actions import ViewOrganisation
 from actions import ViewSite
 from actions import ViewStatut
 from actions import ViewSystemeExploitation
+from actions import ViewVersionApplication
 
 class MainPage(BaseRequestHandler):
   def get(self):
@@ -198,5 +199,6 @@ application = webapp2.WSGIApplication([
   ('/editSysteme', EditSystemeExploitation),
   ('/systeme/([-\w]+)', ViewSystemeExploitation),
   ('/systemes', ListSystemeExploitations),
-  ('/addVersionApplication', AddVersionApplication)
+  ('/addVersionApplication', AddVersionApplication),
+  ('/version/([-\w]+)', ViewVersionApplication)
 ], debug=True)

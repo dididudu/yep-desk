@@ -78,7 +78,7 @@
   <div id="versions" class="tabs-content">
 <ul>
  {% for version in application.versions %}
-  <li><b>{{ application.nom }} {{ version.numero }}</b> : {{ version.commentaire }}</td>
+  <li><a href="/version/{{ version.key.id }}">{{ application.nom }} {{ version.numero }}</a> : {{ version.commentaire }}</td>
  {% endfor %}
 </ul>
 

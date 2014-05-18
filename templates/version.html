@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %} - {{ version.numero }}{% endblock %}
+
+{% block body %}
+
+ <h4>{{ version.numero }}</h4>
+
+{% if user %}
+
+{% if version.commentaire %}
+{% autoescape off %}{{ version.commentaire }}{% endautoescape %}
+{% endif %}
+
+{% if admin %}
+<p class="submit"><a href="/editVersionApplication?id={{ version.key.id }}">Editer</a></p>
+{% endif %}
+
+{% endif %}
+{% endblock %}

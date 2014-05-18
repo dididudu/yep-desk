@@ -18,10 +18,12 @@ from models import Application
 from models import CategorieDemande
 from models import CategorieIncident
 from models import Contact
+from models import Defaut
 from models import Demande
 from models import EtatDemande
 from models import EtatIncident
 from models import Fabricant
+from models import FicheTest
 from models import Fonction
 from models import Groupe
 from models import Imprimante
@@ -35,6 +37,7 @@ from models import Responsable
 from models import Site
 from models import Statut
 from models import SystemeExploitation
+from models import Test
 from models import VersionApplication
 
 from forms import ApplicationForm
@@ -904,6 +907,31 @@ class ViewApplication(BaseRequestHandler):
       }
 
     self.generate('application.html', template_values)
+
+class ViewVersionApplication(BaseRequestHandler):
+  def get(self, arg):
+    title = 'Version introuvable'
+    version = None
+    # Get and displays the version application informations
+    try:
+      id = int(arg)
+      version = VersionApplication.get(db.Key.from_path('VersionApplication', id))
+    except:
+      version = None
+      logging.error('There was an error retreiving version application and its informations from the datastore')
+
+    if not version:
+      self.error(403)
+      return
+    else:
+      title = version.numero
+
+    template_values = {
+      'title': title,
+      'version': version
+      }
+
+    self.generate('version.html', template_values)
 
 class ChartsApplication(BaseRequestHandler):
   def get(self, arg):
