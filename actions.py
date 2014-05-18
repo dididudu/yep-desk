@@ -178,7 +178,7 @@ class AddVersionApplication(BaseRequestHandler):
     except:
       logging.error('There was an error adding version application %s' % n)
     logging.debug('Finish version application adding')
-    self.redirect('/application/%s' % a)
+    self.redirect('/application/%s#versions' % a)
 
 class AddCategorieDemande(BaseRequestHandler):
   def post(self):
