@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %} - {{ version.numero }}{% endblock %}
+{% block title %} - {{ version.application.nom }} {{ version.numero }}{% endblock %}
 
 {% block body %}
 
- <h4>{{ version.numero }}</h4>
+ <h4>{{ version.application.nom }} {{ version.numero }}</h4>
 
 {% if user %}
 
