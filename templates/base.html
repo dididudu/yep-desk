@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>{{ application_name }}{% block title %}{% endblock %}</title>
-        <meta name="description" content="">
+        <meta name="description" content="{% block description %}{% endblock %}">
         <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
         <meta name="HandheldFriendly" content="True">
         <meta name="MobileOptimized" content="320">
@@ -23,101 +23,133 @@
         <link rel="apple-touch-startup-image" href="/static/img/splash.1024x748.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
 
         <!-- Stylesheets -->
-        <link rel="stylesheet" href="http://cdn.ink.sapo.pt/3.0.4/css/ink.css">
+        <link rel="stylesheet" type="text/css" href="http://cdn.ink.sapo.pt/3.0.4/css/ink-flex.min.css">
+        <link rel="stylesheet" type="text/css" href="http://cdn.ink.sapo.pt/3.0.4/css/font-awesome.min.css">
         
-        <!--[if IE 7 ]>
-            <link rel="stylesheet" href="http://cdn.ink.sapo.pt/3.0.4/css/ink-ie7.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <!-- load inks css for IE8 -->
+        <!--[if lt IE 9 ]>
+            <link rel="stylesheet" href="http://cdn.ink.sapo.pt/3.0.4/css/ink-ie.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
         <![endif]-->
+
+        <!-- test browser flexbox support and load legacy grid if unsupported -->
+        <script type="text/javascript" src="http://cdn.ink.sapo.pt/3.0.4/js/modernizr.js"></script>
+        <script type="text/javascript">
+            Modernizr.load({
+              test: Modernizr.flexbox,
+              nope : 'http://cdn.ink.sapo.pt/3.0.4/css/ink-legacy.min.css'
+            });
+        </script>
 
         <!-- Javascripts -->
         <script type="text/javascript" src="http://cdn.ink.sapo.pt/3.0.4/js/holder.js"></script>
+        <script type="text/javascript" src="http://cdn.ink.sapo.pt/3.0.4/js/ink-all.min.js"></script>
+        <script type="text/javascript" src="http://cdn.ink.sapo.pt/3.0.4/js/autoload.js"></script>
+
         <script type="text/javascript" src="http://cdn.ink.sapo.pt/3.0.4/js/ink.min.js"></script>
         <script type="text/javascript" src="http://cdn.ink.sapo.pt/3.0.4/js/ink-ui.min.js"></script>
         <script type="text/javascript" src="http://cdn.ink.sapo.pt/3.0.4/js/ink.tabs.js"></script>
-        <script type="text/javascript" src="http://cdn.ink.sapo.pt/3.0.4/js/autoload.js"></script>
         <script type="text/javascript" src="http://cdn.ink.sapo.pt/3.0.4/js/html5shiv.js"></script>
 	{% block js %}{% endblock %}
         
         <style type="text/css">
+            html, body {
+                height: 100%;
+                background: white;
+            }
+            .wrap {
+                min-height: 100%;
+                height: auto !important;
+                height: 100%;
+                margin: 0 auto -120px;
+                overflow: auto;
+            }
+            .push, footer {
+                height: 120px;
+                margin-top: 0;
+            }
+            footer {
+                background: #ccc;
+                border: 0;
+            }
+            footer * {
+                line-height: inherit;
+            }
+            .top-menu {
+                background: blue;
+            }
             h4 {
-                border-bottom: 2px solid black;
+                border-bottom: 2px solid blue;
             }
             h5 {
-                border-bottom: 1px solid black;
+                border-bottom: 1px solid blue;
             }
         </style>
     </head>
     <body>
-        
-        <!-- Add your site or application content here -->
-        
-        <div class="ink-grid">
+        <div class="wrap">
+            <div class="top-menu">
+                <nav class="ink-navigation ink-grid">
+                    <ul class="menu horizontal blue">
+                        <li class="active"><a href="/"><b><i class="icon-smile"></i> {{ application_name }}</b></a></li>
+                        {% if user %}
+                        <li><a href="/helpdesk">HelpDesk</a>
+                        <ul class="submenu">
+                            <li><a href="/demandes">Demandes</a></li>
 
-            <header class="vspace">
-            </header>
+                            <li><a href="/incidents">Incidents</a></li>
 
-            <nav class="ink-navigation">
-                <ul class="horizontal menu blue rounded shadowed">
-                    <li class="active"><a href="/"><b><i class="icon-smile"></i> {{ application_name }}</b></a></li>
-		{% if user %}
-                    <li><a href="/helpdesk">HelpDesk</a>
-                     <ul class="submenu">
-                      <li><a href="/demandes">Demandes</a></li>
+                            <li><a href="/contacts">Contacts</a></li>
 
-                      <li><a href="/incidents">Incidents</a></li>
+                            {% if admin %}
+                            <li><a href="/groupes">Groupes</a></li>
 
-                      <li><a href="/contacts">Contacts</a></li>
+                            <li><a href="/organisations">Organisations</a></li>
+                            <li><a href="/sites">Sites</a></li>
+                            {% endif %}
+                        </ul>
+                        </li>
 
-                      {% if admin %}
-                      <li><a href="/groupes">Groupes</a></li>
+                        <li><a href="/cmdb">CMDB</a>
+                        <ul class="submenu">
+                            <li><a href="/applications">Applications</a></li>
 
-                      <li><a href="/organisations">Organisations</a></li>
-                      <li><a href="/sites">Sites</a></li>
-                      {% endif %}
-                     </ul>
-                    </li>
+                            <li><a href="/ordinateurs">Ordinateurs</a></li>
 
-                    <li><a href="/cmdb">CMDB</a>
-                     <ul class="submenu">
-                      <li><a href="/applications">Applications</a></li>
+                            <li><a href="/imprimantes">Imprimantes</a></li>
 
-                      <li><a href="/ordinateurs">Ordinateurs</a></li>
+                            {% if admin %}
+                            <li><a href="/import">Import</a></li>
 
-                      <li><a href="/imprimantes">Imprimantes</a></li>
+                            {% endif %}
+                        </ul>
+                        </li>
+                        {% endif %}
+                        {% if admin %}
+                        <li><a href="/admin">Admin.</a>
+                        <ul class="submenu">
+                            <li><a href="/fonctions">Fonctions</a></li>
+                            <li><a href="/etatsDemande">Etats de demande</a></li>
+                            <li><a href="/etatsIncident">Etats d'incident</a></li>
+                            <li><a href="/categoriesDemande">Cat&eacute;gories de demande</a></li>
+                            <li><a href="/categoriesIncident">Cat&eacute;gories d'incident</a></li>
+                            <li><a href="/modeles">Mod&egrave;les</a></li>
+                            <li><a href="/fabricants">Fabricants</a></li>
+                            <li><a href="/statuts">Statuts</a></li>
+                            <li><a href="/systemes">Syst&egrave;mes</a></li>
+                        </ul>
+                        </li>
 
-                      {% if admin %}
-                      <li><a href="/import">Import</a></li>
+                        {% endif %}
+                        {% if user %}
+                        <li><a href="{{ logout_url }}">Logout</a></li>
+                        {% else %}
+                        <li><a href="{{ login_url }}">Login</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
 
-                      {% endif %}
-                     </ul>
-                    </li>
-
-		{% endif %}
-		{% if admin %}
-                    <li><a href="/admin">Admin.</a>
-                     <ul class="submenu">
-                      <li><a href="/fonctions">Fonctions</a></li>
-                      <li><a href="/etatsDemande">Etats de demande</a></li>
-                      <li><a href="/etatsIncident">Etats d'incident</a></li>
-                      <li><a href="/categoriesDemande">Cat&eacute;gories de demande</a></li>
-                      <li><a href="/categoriesIncident">Cat&eacute;gories d'incident</a></li>
-                      <li><a href="/modeles">Mod&egrave;les</a></li>
-                      <li><a href="/fabricants">Fabricants</a></li>
-                      <li><a href="/statuts">Statuts</a></li>
-                      <li><a href="/systemes">Syst&egrave;mes</a></li>
-                     </ul>
-                    </li>
-
-		{% endif %}
-		{% if user %}
-                    <li><a href="{{ logout_url }}">Logout</a></li>
-		{% else %}
-                    <li><a href="{{ login_url }}">Login</a></li>
-		{% endif %}
-                </ul>
-            </nav>
-
-            <div class="vspace">
+            <div class="ink-grid vertical-space">
 		{% if user %}
 			{% block body %}
 			<p>...</p>
@@ -130,16 +162,15 @@
 			<p>&nbsp;</p>
 		{% endif %}   
             </div>
-
-            <footer>
-                <div class="ink-grid">
-                    <p class="small vspace">
-                        &copy; Copyright 2013-2014 Me
-                    </p>
-                </div>
-            </footer>
-        
+            <div class="push"></div>
         </div>
-
+        <footer class="clearfix">
+            <div class="ink-grid">
+                <ul class="unstyled inline half-vertical-space">
+                    <li class="active"><a href="/apropos">A propos</a></li>
+                </ul>
+                <p class="note">&copy; Copyright 2103-2014 YeP Desk</p>
+            </div>
+        </footer>
     </body>
 </html>

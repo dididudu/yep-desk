@@ -93,6 +93,12 @@ class MainPage(BaseRequestHandler):
       }
     self.generate('index.html', template_values)
 
+class AProposPage(BaseRequestHandler):
+  def get(self):
+    template_values = {
+      }
+    self.generate('apropos.html', template_values)
+
 class AdminPage(BaseRequestHandler):
   def get(self):
     template_values = {
@@ -119,6 +125,7 @@ class ImportPage(BaseRequestHandler):
 
 application = webapp2.WSGIApplication([
   ('/', MainPage),
+  ('/apropos', AProposPage),
   ('/admin', AdminPage),
   ('/cmdb', CMDBPage),
   ('/helpdesk', HelpdeskPage),
