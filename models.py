@@ -55,7 +55,7 @@ class Groupe(Objet):
     return self.nom
 
 class Membre(Objet):
-  personne = db.ReferenceProperty(Contact)
+  contact = db.ReferenceProperty(Contact)
   groupe = db.ReferenceProperty(Groupe)
 
 class Responsable(Objet):
@@ -208,7 +208,7 @@ class VersionApplication(db.Model):
   commentaire = db.TextProperty()
 
 class FicheTest(db.Model):
-  application = db.ReferenceProperty(Application)
+  application = db.ReferenceProperty(Application, collection_name='fiches')
   redacteur = db.ReferenceProperty(Contact)
   code = db.StringProperty()
   nom = db.StringProperty()

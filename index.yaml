@@ -34,6 +34,11 @@ indexes:
   - name: utilisateur
   - name: reference
 
+- kind: Membre
+  properties:
+  - name: groupe
+  - name: contact.nom
+
 - kind: MesureApplication
   properties:
   - name: application

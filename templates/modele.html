@@ -18,7 +18,7 @@
 <p class="submit"><a href="/editModele?id={{ modele.key.id }}">Editer</a></p>
 {% endif %}
 
-{% if modele.type != 'Imprimante' %}
+{% if modele.type == 'Ordinateur' %}
  <h5>Ordinateurs de ce mod&egrave;le</h5>
 
  <table class="ink-table alternating hover">
@@ -33,6 +33,26 @@
     <td>{{ ord.statut }}</td>
     <td>{{ ord.systeme }}</td>
     <td><a href="/editOrdinateur?id={{ ord.key.id }}">Editer</a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+{% if modele.type = 'Tablette' %}
+ <h5>Tablettes de ce mod&egrave;le</h5>
+
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr><th>Code</th><th>No s&eacute;rie</th><th>Statut</th><th>&nbsp;</th></tr>
+  </thead>
+  <tbody>
+  {% for tab in tablettes %}
+   <tr>
+    <td><a href="/tablette/{{ tab.key.id }}">{{ tab.code }}</a></td>
+    <td>{{ tab.no_serie }}</td>
+    <td>{{ tab.statut }}</td>
+    <td><a href="/editTablette?id={{ tab.key.id }}">Editer</a></td>
    </tr>
   {% endfor %}
   </tbody>

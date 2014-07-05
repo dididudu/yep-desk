@@ -18,15 +18,62 @@
 
 <div class="ink-tabs top"> <!-- Creates a tabbed view with top nav -->
   <ul class="tabs-nav">
-    <li><a href="#item1">Incidents</a></li>
-    <li><a href="#item2">Demandes</a></li>
+    <li><a href="#membres">Membres</a></li>
+    <li><a href="#incidents">Incidents</a></li>
+    <li><a href="#demandes">Demandes</a></li>
     </ul>
 
-    <div id="item1" class="tabs-content">
+    <div id="membres" class="tabs-content">
+
+{% if membres %}
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Nom</th>
+    <th>Organisation</th>
+    <th>Email</th>
+    <th>T&eacute;l&eacute;phone</th>
+    <th>&nbsp;</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for m in membres %}
+   <tr>
+    <td><a href="/contact/{{ m.contact.key.id }}">{{ m.contact.prenom }} {{ m.contact.nom }}</a></td>
+    <td>{% if m.contact.organisation %}<a href="/organisation/{{ m.contact.organisation.key.id }}">{{ m.contact.organisation.nom }}</a>{% endif %}</td>
+    <td>{{ m.contact.email }}</td>
+    <td>{{ m.contact.telephone }}</td>
+    <td><a href="/editContact?id={{ m.contact.key.id }}">Editer</a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endif %}
+
+{% if admin %}
+ <form action="/addMembre2Groupe" method="post">
+  <input type="hidden" name="groupe" value="{{ groupe.key.id }}" />
+  <table class="form">
+   <tr>
+    <td><label>Membre : </label></td>
+    <td>
+     <select name="contact">
+      {% for c in contacts %}
+       <option value="{{ c.key.id }}">{{ c.prenom }} {{ c.nom }}</option>
+      {% endfor %}
+     </select>
+    </td>
+    <td><input class="submit" type="submit" value="Ajouter"/></td>
+   </tr>
+  </table>
+ </form>
+{% endif %}
+
+    </div>
+
+    <div id="incidents" class="tabs-content">
 
 {% if incidents %}
- <h5>Incidents {{ groupe }}</h5>
-
  <table class="ink-table alternating hover">
   <thead>
    <tr><th>R&eacute;f&eacute;rence</th><th>Etat</th><th>Cat&eacute;gorie</th><th>R&eacute;sum&eacute;</th><th>&nbsp;</th></tr>
@@ -47,11 +94,9 @@
 
     </div>
 
-    <div id="item2" class="tabs-content">
+    <div id="demandes" class="tabs-content">
 
 {% if demandes %}
- <h5>Demandes {{ groupe }}</h5>
-
  <table class="ink-table alternating hover">
   <thead>
    <tr><th>R&eacute;f&eacute;rence</th><th>Etat</th><th>Cat&eacute;gorie</th><th>R&eacute;sum&eacute;</th><th>&nbsp;</th></tr>

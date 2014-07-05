@@ -6,26 +6,21 @@
 
  <h4>Organisation {{ organisation.nom }}</h4>
 
- <p>&nbsp;</p>
-
-{% if user %}
-
-<div class="ink-tabs top"> <!-- Creates a tabbed view with top nav -->
-  <ul class="tabs-nav">
-    <li><a href="#item1">Informations</a></li>
-    <li><a href="#item2">Membres</a></li>
-    <li><a href="#item3">Ordinateurs</a></li>
-    <li><a href="#item4">Imprimantes</a></li>
-    </ul>
-
-    <div id="item1" class="tabs-content"> <!-- Item 1 -->
 {% if organisation.description %}
 {% autoescape off %}{{ organisation.description }}{% endautoescape %}
 {% endif %}
 {% if admin %}
 <p class="submit"><a href="/editOrganisation?id={{ organisation.key.id }}">Editer</a></p>
 {% endif %}
-    </div>
+
+{% if user %}
+
+<div class="ink-tabs top"> <!-- Creates a tabbed view with top nav -->
+  <ul class="tabs-nav">
+    <li><a href="#item2">Membres</a></li>
+    <li><a href="#item3">Ordinateurs</a></li>
+    <li><a href="#item4">Imprimantes</a></li>
+    </ul>
 
     <div id="item2" class="tabs-content"> <!-- Item 2 -->
 {% if contacts %}

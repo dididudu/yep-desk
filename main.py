@@ -10,6 +10,7 @@ import webapp2
 from actions import BaseRequestHandler
 from actions import CheckImportMateriel
 from actions import ImportMateriel
+from actions import AddMembre2Groupe
 from actions import AddApplication
 from actions import AddCategorieDemande
 from actions import AddCategorieIncident
@@ -132,6 +133,7 @@ application = webapp2.WSGIApplication([
   ('/import', ImportPage),
   ('/check_import', CheckImportMateriel),
   ('/import_materiel', ImportMateriel),
+  ('/addMembre2Groupe', AddMembre2Groupe),
   ('/addMesure', AddMesureApplication),
   ('/addApplication', AddApplication),
   ('/editApplication', EditApplication),

@@ -132,6 +132,44 @@ class ImportMateriel(BaseRequestHandler):
 
     self.generate('result.html', template_values)
 
+class AddMembre2Groupe(webapp2.RequestHandler):
+  def post(self):
+    logging.debug('Start groupe membre adding request')
+    g = self.request.get('groupe')
+    c = self.request.get('contact')
+
+    m = Membre()
+
+    user = users.GetCurrentUser()
+    if user:
+      logging.info('membre added by user %s' % user.nickname())
+      m.created_by = user
+      m.updated_by = user
+    else:
+      logging.info('membre added by anonymous user')
+
+    try:
+      i = int(g)
+      groupe = Groupe.get(db.Key.from_path('Groupe', i))
+      m.groupe = groupe
+    except:
+      logging.error('There was an error retreiving groupe %s' % g)
+
+    try:
+      i = int(c)
+      contact = Contact.get(db.Key.from_path('Contact', i))
+      m.contact = contact
+    except:
+      logging.error('There was an error retreiving contact %s' % c)
+
+    try:
+      m.put()
+    except:
+      logging.error('There was an error adding membre')
+
+    logging.debug('Finish groupe membre adding')
+    self.redirect('/groupe/%s' % g)
+
 class AddApplication(webapp2.RequestHandler):
   def post(self):
     logging.debug('Start application adding request')
@@ -1010,6 +1048,7 @@ class ViewContact(BaseRequestHandler):
   def get(self, arg):
     title = 'Contact introuvable'
     contact = None
+    groupes = []
     demandes = []
     incidents = []
     ordinateurs = []
@@ -1019,12 +1058,14 @@ class ViewContact(BaseRequestHandler):
       id = int(arg)
       contact = Contact.get(db.Key.from_path('Contact', id))
       if contact:
+        groupes = Membre.gql("WHERE contact = :1", contact)
         demandes = Demande.gql("WHERE demandeur = :1 ORDER BY reference", contact)
         incidents = Incident.gql("WHERE utilisateur = :1 ORDER BY reference", contact)
         ordinateurs = Ordinateur.gql("WHERE utilisateur = :1 ORDER BY code", contact)
         imprimantes = Imprimante.gql("WHERE utilisateur = :1 ORDER BY code", contact)
     except:
       contact = None
+      groupes = []
       demandes = []
       incidents = []
       ordinateurs = []
@@ -1038,6 +1079,7 @@ class ViewContact(BaseRequestHandler):
     template_values = {
       'title': title,
       'contact': contact,
+      'groupes': groupes,
       'demandes': demandes,
       'incidents': incidents,
       'ordinateurs': ordinateurs,
@@ -1144,17 +1186,23 @@ class ViewGroupe(BaseRequestHandler):
   def get(self, arg):
     title = 'Groupe introuvable'
     groupe = None
+    contacts = []
+    membres = []
     incidents = []
     demandes = []
     # Get and displays the groupe informations
     try:
       id = int(arg)
       groupe = Groupe.get(db.Key.from_path('Groupe', id))
+      contacts = Contact.gql("ORDER BY nom")
+      membres = Membre.gql("WHERE groupe = :1", groupe)
       if groupe:
         incidents = Incident.gql("WHERE affecte = :1 ORDER BY reference", groupe)
         demandes = Demande.gql("WHERE affecte = :1 ORDER BY reference", groupe)
     except:
       groupe = None
+      contacts = []
+      membres = []
       incidents = []
       demandes = []
       logging.error('There was an error retreiving groupe and its informations from the datastore')
@@ -1166,6 +1214,8 @@ class ViewGroupe(BaseRequestHandler):
     template_values = {
       'title': title,
       'groupe': groupe,
+      'contacts': contacts,
+      'membres': membres,
       'incidents': incidents,
       'demandes': demandes,
     }
@@ -1306,9 +1356,6 @@ class ViewOrganisation(BaseRequestHandler):
       organisation = Organisation.get(db.Key.from_path('Organisation', id))
       if organisation:
         contacts = Contact.gql("WHERE organisation = :1 ORDER BY nom", organisation)
-        for contact in contacts :
-          ordinateurs = ordinateurs.extend(Ordinateur.gql("WHERE utilisateur = :1", contact))
-          imprimantes = imprimantes.extend(Imprimante.gql("WHERE utilisateur = :1", contact))
     except:
       organisation = None
       contacts = []

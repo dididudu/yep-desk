@@ -13,10 +13,13 @@
 <div class="ink-tabs top"> <!-- Creates a tabbed view with top nav -->
   <ul class="tabs-nav">
     <li><a href="#item0">Informations</a></li>
-    <li><a href="#item1">Demandes</a></li>
-    <li><a href="#item2">Incidents</a></li>
-    <li><a href="#item3">Ordinateurs</a></li>
-    <li><a href="#item4">Imprimantes</a></li>
+{% if groupes %}
+    <li><a href="#item1">Groupes</a></li>
+{% endif %}
+    <li><a href="#item2">Demandes</a></li>
+    <li><a href="#item3">Incidents</a></li>
+    <li><a href="#item4">Ordinateurs</a></li>
+    <li><a href="#item5">Imprimantes</a></li>
     </ul>
 
     <div id="item0" class="tabs-content"> <!-- Item 0 -->
@@ -46,7 +49,25 @@
 
     </div>
 
+{% if groupes %}
     <div id="item1" class="tabs-content"> <!-- Item 1 -->
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr><th>Groupe</th><th>&nbsp;</th></tr>
+  </thead>
+  <tbody>
+  {% for g in groupes %}
+   <tr>
+    <td><a href="/groupe/{{ g.groupe.key.id }}">{{ g.groupe.nom }}</a></td>
+    <td><a href="/editGroupe?id={{ g.groupe.key.id }}">Editer</a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+    </div>
+{% endif %}
+
+    <div id="item2" class="tabs-content"> <!-- Item 1 -->
 
 {% if demandes %}
  <table class="ink-table alternating hover">
@@ -60,7 +81,7 @@
     <td>{{ dem.etat }}</td>
     <td>{{ dem.categorie }}</td>
     <td>{{ dem.resume }}</td>
-    <td><a href="/editDemandet?id={{ dem.key.id }}">Editer</a></td>
+    <td><a href="/editDemande?id={{ dem.key.id }}">Editer</a></td>
    </tr>
   {% endfor %}
   </tbody>
@@ -68,7 +89,8 @@
 {% endif %}
 
     </div>
-    <div id="item2" class="tabs-content"> <!-- Item 2 -->
+
+    <div id="item3" class="tabs-content"> <!-- Item 2 -->
 
 {% if incidents %}
  <table class="ink-table alternating hover">
@@ -91,7 +113,7 @@
 
     </div>
 
-    <div id="item3" class="tabs-content">
+    <div id="item4" class="tabs-content">
 
 {% if ordinateurs %}
  <table class="ink-table alternating hover">
@@ -103,7 +125,7 @@
    <tr>
     <td><a href="/ordinateur/{{ ord.key.id }}">{{ ord.code }}</a></td>
     <td>{{ ord.no_serie }}</td>
-    <td>{{ ord.modele }}</td>
+    <td><a href="/modele/{{ ord.modele.key.id }}">{{ ord.modele.nom }}</a></td>
     <td>{{ ord.statut }}</td>
     <td>{{ ord.systeme }}</td>
     <td><a href="/editOrdinateur?id={{ ord.key.id }}">Editer</a></td>
@@ -115,7 +137,7 @@
 
     </div>
 
-    <div id="item4" class="tabs-content">
+    <div id="item5" class="tabs-content">
 
 {% if imprimantes %}
  <table class="ink-table alternating hover">
@@ -127,7 +149,7 @@
    <tr>
     <td><a href="/imprimante/{{ imp.key.id }}">{{ imp.code }}</a></td>
     <td>{{ imp.no_serie }}</td>
-    <td>{{ imp.modele }}</td>
+    <td><a href="/modele/{{ imp.modele.key.id }}">{{ imp.modele.nom }}</a></td>
     <td>{{ imp.statut }}</td>
     <td><a href="/editImprimante?id={{ imp.key.id }}">Editer</a></td>
    </tr>
