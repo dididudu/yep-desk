@@ -169,6 +169,14 @@ class Incident(Objet):
   def __str__(self):
     return self.reference
 
+class CommentaireDemande(Objet):
+  demande = db.ReferenceProperty(Demande, collection_name='commentaires')
+  texte = db.TextProperty()
+
+class CommentaireIncident(Objet):
+  incident = db.ReferenceProperty(Incident, collection_name='commentaires')
+  texte = db.TextProperty()
+
 class Application(Objet):
   nom = db.StringProperty()
   actif = db.BooleanProperty(default=True)

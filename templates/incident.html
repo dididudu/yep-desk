@@ -11,13 +11,10 @@
   <div class="ink-grid">
 
     <div class="column-group gutters">
-      <div class="large-50 medium-50 small-100"><label>Cat&eacute;gorie</label> : {{ incident.categorie }}</div>
-      <div class="large-50 medium-50 small-100"><label>Etat</label> : {{ incident.etat }}</div>
-    </div>
-
-    <div class="column-group gutters">
-      <div class="large-50 medium-50 small-100"><label>Utilisateur</label> : {% if incident.utilisateur %}<a href="/contact/{{ incident.utilisateur.key.id }}">{{ incident.utilisateur }}</a>{% endif %}</div>
-      <div class="large-50 medium-50 small-100"><label>Ouvert le</label> : {{ incident.created|date:"j/m/y" }}</div>
+      <div class="large-25 medium-50 small-100"><label>Cat&eacute;gorie</label> : {{ incident.categorie }}</div>
+      <div class="large-25 medium-50 small-100"><label>Etat</label> : {{ incident.etat }}</div>
+      <div class="large-25 medium-50 small-100"><label>Utilisateur</label> : {% if incident.utilisateur %}<a href="/contact/{{ incident.utilisateur.key.id }}">{{ incident.utilisateur }}</a>{% endif %}</div>
+      <div class="large-25 medium-50 small-100"><label>Ouvert le</label> : {{ incident.created|date:"j/m/y" }}</div>
     </div>
 
     <div class="column-group gutters">
@@ -42,6 +39,59 @@
 {% if admin %}
 <p class="submit"><a href="/editIncident?id={{ incident.key.id }}">Editer</a></p>
 {% endif %}
+
+<div class="ink-tabs top"> <!-- Creates a tabbed view with top nav -->
+
+  <ul class="tabs-nav">
+{% if admin %}
+    <li><a href="#item0">Ajout de commentaire</a></li>
+{% endif %}
+    <li><a href="#item1">Commentaires</a></li>
+    <li><a href="#item2">Pi&egrave;ces jointes</a></li>
+  </ul>
+
+{% if admin %}
+    <div id="item0" class="tabs-content">
+     <form action="/addCommentaire2Incident" method="post">
+      <input type="hidden" name="id" value="{{ incident.key.id }}" />
+      <table class="form">
+       <tr>
+        <td><input name="texte" value="" size="48"/></td>
+        <td>&nbsp;</td>
+        <td><input class="submit" type="submit" value="Ajouter"/></td>
+       </tr>
+      </table>
+     </form>
+    </div>
+{% endif %}
+
+    <div id="item1" class="tabs-content">
+
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>User</th>
+    <th>Date</th>
+    <th>Commentaire</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for c in incident.commentaires %}
+   <tr>
+    <td align="center">{{ c.created_by }}</td>
+    <td align="center">{{ c.created|date:"j/m/y" }}</td>
+    <td align="left">{{ c.texte }}</td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+
+    </div>
+
+    <div id="item1" class="tabs-content">
+    </div>
+
+</div>
 
 {% endif %}
 {% endblock %}

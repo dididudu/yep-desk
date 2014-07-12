@@ -11,6 +11,8 @@ from wtforms.ext.appengine.fields import ReferencePropertyField
 from models import Application
 from models import CategorieDemande
 from models import CategorieIncident
+from models import CommentaireDemande
+from models import CommentaireIncident
 from models import Contact
 from models import Demande
 from models import EtatDemande

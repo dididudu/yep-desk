@@ -141,6 +141,7 @@
 
                         {% endif %}
                         {% if user %}
+                        <li><a href="/contacts"><i class="icon-bar-chart"></i> {{ user.nickname }}</a></li>
                         <li><a href="{{ logout_url }}">Logout</a></li>
                         {% else %}
                         <li><a href="{{ login_url }}">Login</a></li>
@@ -169,7 +170,7 @@
                 <ul class="unstyled inline half-vertical-space">
                     <li class="active"><a href="/apropos">A propos</a></li>
                 </ul>
-                <p class="note">&copy; Copyright 2103-2014 YeP Desk</p>
+                <p class="note">&copy; Copyright 2103-2014 YeP DesK</p>
             </div>
         </footer>
     </body>

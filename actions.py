@@ -17,6 +17,8 @@ from google.appengine.ext.webapp import template
 from models import Application
 from models import CategorieDemande
 from models import CategorieIncident
+from models import CommentaireDemande
+from models import CommentaireIncident
 from models import Contact
 from models import Defaut
 from models import Demande
@@ -169,6 +171,70 @@ class AddMembre2Groupe(webapp2.RequestHandler):
 
     logging.debug('Finish groupe membre adding')
     self.redirect('/groupe/%s' % g)
+
+class AddCommentaire2Demande(webapp2.RequestHandler):
+  def post(self):
+    logging.debug('Start demande commentaire adding request')
+
+    id = self.request.get('id')
+    texte = self.request.get('texte')
+
+    c = CommentaireDemande(texte=texte)
+
+    user = users.GetCurrentUser()
+    if user:
+      logging.info('commentaire added by user %s' % user.nickname())
+      c.created_by = user
+      c.updated_by = user
+    else:
+      logging.info('commentaire added by anonymous user')
+
+    try:
+      i = int(id)
+      demande = Demande.get(db.Key.from_path('Demande', i))
+      c.demande = demande
+    except:
+      logging.error('There was an error retreiving demande %s' % id)
+
+    try:
+      c.put()
+    except:
+      logging.error('There was an error adding commentaire demande')
+
+    logging.debug('Finish demande commentaire adding')
+    self.redirect('/demande/%s#item1' % id)
+
+class AddCommentaire2Incident(webapp2.RequestHandler):
+  def post(self):
+    logging.debug('Start incident commentaire adding request')
+
+    id = self.request.get('id')
+    texte = self.request.get('texte')
+
+    c = CommentaireIncident(texte=texte)
+
+    user = users.GetCurrentUser()
+    if user:
+      logging.info('commentaire added by user %s' % user.nickname())
+      c.created_by = user
+      c.updated_by = user
+    else:
+      logging.info('commentaire added by anonymous user')
+
+    try:
+      i = int(id)
+      incident = Incident.get(db.Key.from_path('Incident', i))
+      c.incident = incident
+    except:
+      logging.error('There was an error retreiving incident %s' % id)
+
+    try:
+      c.put()
+    except:
+      logging.error('There was an error adding commentaire incident')
+
+    logging.debug('Finish incident commentaire adding')
+    self.redirect('/incident/%s#item1' % id)
 
 class AddApplication(webapp2.RequestHandler):
   def post(self):

@@ -6,13 +6,27 @@
 
  <h4>Contact {{ contact.prenom }} {{ contact.nom }}</h4>
 
- <p>&nbsp;</p>
-
 {% if user %}
+
+  <div class="ink-grid">
+    <div class="column-group gutters">
+      <div class="large-25 medium-50 small-100"><label>Userid</label> : {{ contact.userid }}</div>
+      <div class="large-25 medium-50 small-100"><label>Organisation</label> : {% if contact.organisation %}<a href="/organisation/{{ contact.organisation.key.id }}">{{ contact.organisation.nom }}</a>{% endif %}</div>
+      <div class="large-25 medium-50 small-100"><label>Site</label> : {% if contact.site %}<a href="/site/{{ contact.site.key.id }}">{{ contact.site.nom }}</a>{% endif %}</div>
+      <div class="large-25 medium-50 small-100"><label>Fonction</label> : {{ contact.fonction }}</div>
+    </div>
+    <div class="column-group gutters">
+      <div class="large-50 medium-50 small-100"><label>Email</label> : {{ contact.email }}</div>
+      <div class="large-50 medium-50 small-100"><label>T&eacute;l&eacute;phone</label> : {{ contact.telephone }}</div>
+    </div>
+  </div> 
+
+{% if admin %}
+<p class="submit"><a href="/editContact?id={{ contact.key.id }}">Editer</a></p>
+{% endif %}
 
 <div class="ink-tabs top"> <!-- Creates a tabbed view with top nav -->
   <ul class="tabs-nav">
-    <li><a href="#item0">Informations</a></li>
 {% if groupes %}
     <li><a href="#item1">Groupes</a></li>
 {% endif %}
@@ -21,33 +35,6 @@
     <li><a href="#item4">Ordinateurs</a></li>
     <li><a href="#item5">Imprimantes</a></li>
     </ul>
-
-    <div id="item0" class="tabs-content"> <!-- Item 0 -->
-
-  <div class="ink-grid">
-
-    <div class="column-group gutters">
-      <div class="large-50 medium-50 small-100"><label>Userid</label> : {{ contact.userid }}</div>
-      <div class="large-50 medium-50 small-100"><label>Fonction</label> : {{ contact.fonction }}</div>
-    </div>
-
-    <div class="column-group gutters">
-      <div class="large-50 medium-50 small-100"><label>Organisation</label> : {% if contact.organisation %}<a href="/organisation/{{ contact.organisation.key.id }}">{{ contact.organisation.nom }}</a>{% endif %}</div>
-      <div class="large-50 medium-50 small-100"><label>Site</label> : {% if contact.site %}<a href="/site/{{ contact.site.key.id }}">{{ contact.site.nom }}</a>{% endif %}</div>
-    </div>
-
-    <div class="column-group gutters">
-      <div class="large-50 medium-50 small-100"><label>Email</label> : {{ contact.email }}</div>
-      <div class="large-50 medium-50 small-100"><label>T&eacute;l&eacute;phone</label> : {{ contact.telephone }}</div>
-    </div>
-
-  </div> 
-
-{% if admin %}
-<p class="submit"><a href="/editContact?id={{ contact.key.id }}">Editer</a></p>
-{% endif %}
-
-    </div>
 
 {% if groupes %}
     <div id="item1" class="tabs-content"> <!-- Item 1 -->
