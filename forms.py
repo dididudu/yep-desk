@@ -18,6 +18,7 @@ from models import Demande
 from models import EtatDemande
 from models import EtatIncident
 from models import Fabricant
+from models import FicheTest
 from models import Fonction
 from models import Groupe
 from models import Imprimante
@@ -68,6 +69,11 @@ class FabricantForm(Form):
   nom = TextField(u'Nom', validators=[validators.required()])
   description = TextAreaField(u'Description', validators=[validators.optional()])
 
+class FicheTestForm(Form):
+  nom = TextField(u'Nom', validators=[validators.required()])
+  code = TextField(u'Code', validators=[validators.optional()])
+  commentaire = TextAreaField(u'Commentaire', validators=[validators.optional()])
+
 class FonctionForm(Form):
   nom = TextField(u'Nom', validators=[validators.required()])
   description = TextAreaField(u'Description', validators=[validators.optional()])
@@ -117,6 +123,7 @@ class MesureApplicationForm(Form):
 class VersionApplicationForm(Form):
   application = ReferencePropertyField(u'Application', reference_class=Application)
   numero = TextField(u'Numero', validators=[validators.required()])
+  commentaire = TextAreaField(u'Commentaire', validators=[validators.optional()])
 
 class ModeleForm(Form):
   fabricant = ReferencePropertyField(u'Fabricant', reference_class=Fabricant)

@@ -13,7 +13,7 @@
   {% endif %}
 
   {% if application.description %}
-  {% autoescape off %}{{ application.description }}{% endautoescape %}
+  <p>{% autoescape off %}{{ application.description }}{% endautoescape %}</p>
   {% endif %}
 
   {% if admin %}
@@ -43,7 +43,7 @@
   <tbody>
   {% for f in application.fiches %}
    <tr>
-    <td align="left">{{ f.nom }}</td>
+    <td align="left"><a href="/fiche/{{ f.key.id }}">{{ f.nom }}</a></td>
     <td align="center">{{ f.created_by }}</td>
     <td align="center">{{ f.created|date:"j/m/y" }}</td>
    </tr>

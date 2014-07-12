@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %} - Fiche {{ fiche.nom }} pour {{ fiche.application.nom }}{% endblock %}
+
+{% block body %}
+
+ <h4>Fiche {{ fiche.nom }} pour {{ fiche.application.nom }}</h4>
+
+{% if user %}
+
+<p>Code : {{ fiche.code }}</p>
+<p>Application : <a href="/application/{{ fiche.application.key.id }}">{{ fiche.application.nom }}</a></p>
+
+{% if fiche.commentaire %}
+<p>{% autoescape off %}{{ fiche.commentaire }}{% endautoescape %}</p>
+{% endif %}
+
+{% if admin %}
+<p class="submit"><a href="/editFicheTest?id={{ fiche.key.id }}">Editer</a></p>
+{% endif %}
+
+{% endif %}
+{% endblock %}

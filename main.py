@@ -79,6 +79,7 @@ from actions import ViewDemande
 from actions import ViewEtatDemande
 from actions import ViewEtatIncident
 from actions import ViewFabricant
+from actions import ViewFicheTest
 from actions import ViewFonction
 from actions import ViewGroupe
 from actions import ViewImprimante
@@ -166,6 +167,7 @@ application = webapp2.WSGIApplication([
   ('/editEtatIncident', EditEtatIncident),
   ('/etatIncident/([-\w]+)', ViewEtatIncident),
   ('/etatsIncident', ListEtatsIncident),
+  ('/fiche/([-\w]+)', ViewFicheTest),
   ('/addFabricant', AddFabricant),
   ('/editFabricant', EditFabricant),
   ('/fabricant/([-\w]+)', ViewFabricant),

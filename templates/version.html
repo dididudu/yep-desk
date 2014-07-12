@@ -11,7 +11,7 @@
 <p>Application : <a href="/application/{{ version.application.key.id }}">{{ version.application.nom }}</a></p>
 
 {% if version.commentaire %}
-{% autoescape off %}{{ version.commentaire }}{% endautoescape %}
+<p>{% autoescape off %}{{ version.commentaire }}{% endautoescape %}</p>
 {% endif %}
 
 {% if admin %}

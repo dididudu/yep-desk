@@ -50,6 +50,7 @@ from forms import DemandeForm
 from forms import EtatDemandeForm
 from forms import EtatIncidentForm
 from forms import FabricantForm
+from forms import FicheTestForm
 from forms import FonctionForm
 from forms import GroupeForm
 from forms import ImprimanteForm
@@ -61,6 +62,7 @@ from forms import OrganisationForm
 from forms import SiteForm
 from forms import StatutForm
 from forms import SystemeExploitationForm
+from forms import VersionApplicationForm
 
 # Set to true if we want to have our webapp print stack traces, etc
 _DEBUG = True
@@ -1254,6 +1256,31 @@ class ViewFabricant(BaseRequestHandler):
       }
 
     self.generate('fabricant.html', template_values)
+
+class ViewFicheTest(BaseRequestHandler):
+  def get(self, arg):
+    title = 'Fiche de test introuvable'
+    fiche = None
+    # Get and displays the fiche informations
+    try:
+      id = int(arg)
+      fiche = FicheTest.get(db.Key.from_path('FicheTest', id))
+    except:
+      fiche = None
+      logging.error('There was an error retreiving fiche and its informations from the datastore')
+
+    if not fiche:
+      self.error(403)
+      return
+    else:
+      title = fiche.nom
+
+    template_values = {
+      'title': title,
+      'fiche': fiche
+      }
+
+    self.generate('fiche.html', template_values)
 
 class ViewFonction(BaseRequestHandler):
   def get(self, arg):
