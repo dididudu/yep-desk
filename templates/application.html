@@ -6,18 +6,8 @@
 
  <h4>Application {{ application.nom }}</h4>
 
- <p>&nbsp;</p>
-
 {% if user %}
 
-<div class="ink-tabs top"> <!-- Creates a tabbed view with top nav -->
-  <ul class="tabs-nav">
-    <li><a href="#infos">Informations</a></li>
-    <li><a href="#mesures">Mesures</a></li>
-    <li><a href="#versions">Versions</a></li>
-  </ul>
-
-  <div id="infos" class="tabs-content">
   {% if not application.actif %}
   <p>Application retir&eacute;e du service.</p>
   {% endif %}
@@ -29,7 +19,58 @@
   {% if admin %}
   <p class="submit"><a href="/editApplication?id={{ application.key.id }}">Editer</a></p>
   {% endif %}
+
+<div class="ink-tabs top"> <!-- Creates a tabbed view with top nav -->
+  <ul class="tabs-nav">
+    <li><a href="#fiches">Fiches de test</a></li>
+{% if admin %}
+    <li><a href="#ajout">Ajout de fiche</a></li>
+{% endif %}
+    <li><a href="#mesures">Mesures</a></li>
+    <li><a href="#versions">Versions</a></li>
+  </ul>
+
+  <div id="fiches" class="tabs-content">
+
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Fiche</th>
+    <th>R&eacute;dacteur</th>
+    <th>Date</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for f in application.fiches %}
+   <tr>
+    <td align="left">{{ f.nom }}</td>
+    <td align="center">{{ f.created_by }}</td>
+    <td align="center">{{ f.created|date:"j/m/y" }}</td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+
   </div>
+
+{% if admin %}
+  <div id="ajout" class="tabs-content">
+   <form action="/addFicheTestApplication" method="post">
+    <input type="hidden" name="id" value="{{ application.key.id }}" />
+    <table class="form" cellpadding="5">
+     <tr>
+      <td><label>Nom</label> : <input name="nom" size="32" value=""/></td>
+     </tr>
+     <tr>
+      <td><textarea name="commentaire" rows="4" cols="48"></textarea></td>
+     </tr>
+     <tr>
+      <td align="center"><input class="submit" type="submit" value="Ajouter"/></td>
+     </tr>
+    </table>
+   </form>
+  </div>
+{% endif %}
 
   <div id="mesures" class="tabs-content">
 {% if application.actif %}

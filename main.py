@@ -10,17 +10,18 @@ import webapp2
 from actions import BaseRequestHandler
 from actions import CheckImportMateriel
 from actions import ImportMateriel
-from actions import AddCommentaire2Demande
-from actions import AddCommentaire2Incident
 from actions import AddMembre2Groupe
 from actions import AddApplication
 from actions import AddCategorieDemande
 from actions import AddCategorieIncident
+from actions import AddCommentaireDemande
+from actions import AddCommentaireIncident
 from actions import AddContact
 from actions import AddDemande
 from actions import AddEtatDemande
 from actions import AddEtatIncident
 from actions import AddFabricant
+from actions import AddFicheTestApplication
 from actions import AddFonction
 from actions import AddGroupe
 from actions import AddImprimante
@@ -135,8 +136,6 @@ application = webapp2.WSGIApplication([
   ('/import', ImportPage),
   ('/check_import', CheckImportMateriel),
   ('/import_materiel', ImportMateriel),
-  ('/addCommentaire2Demande', AddCommentaire2Demande),
-  ('/addCommentaire2Incident', AddCommentaire2Incident),
   ('/addMembre2Groupe', AddMembre2Groupe),
   ('/addMesure', AddMesureApplication),
   ('/addApplication', AddApplication),
@@ -152,6 +151,8 @@ application = webapp2.WSGIApplication([
   ('/editCategorieIncident', EditCategorieIncident),
   ('/categorieIncident/([-\w]+)', ViewCategorieIncident),
   ('/categoriesIncident', ListCategoriesIncident),
+  ('/addCommentaireDemande', AddCommentaireDemande),
+  ('/addCommentaireIncident', AddCommentaireIncident),
   ('/addContact', AddContact),
   ('/editContact', EditContact),
   ('/contact/([-\w]+)', ViewContact),
@@ -161,6 +162,7 @@ application = webapp2.WSGIApplication([
   ('/etatDemande/([-\w]+)', ViewEtatDemande),
   ('/etatsDemande', ListEtatsDemande),
   ('/addEtatIncident', AddEtatIncident),
+  ('/addFicheTestApplication', AddFicheTestApplication),
   ('/editEtatIncident', EditEtatIncident),
   ('/etatIncident/([-\w]+)', ViewEtatIncident),
   ('/etatsIncident', ListEtatsIncident),

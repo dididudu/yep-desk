@@ -23,11 +23,11 @@
     </div>
 
     <div class="column-group gutters">
-      <div class="large-100 medium-100 small-100"><label>R&eacute;sum&eacute;</label> : {{ incident.resume }}</div>
+      <div class="large-100 medium-100 small-100"><label><b>R&eacute;sum&eacute;</b></label> : {{ incident.resume }}</div>
     </div>
 
     <div class="column-group gutters">
-      <div class="large-100 medium-100 small-100"><label>Description</label> :<br/>
+      <div class="large-100 medium-100 small-100"><label><b>Description</b></label> :<br/>
    {% if incident.description %}
    {% autoescape off %}{{ incident.description }}{% endautoescape %}
    {% endif %}
@@ -43,29 +43,14 @@
 <div class="ink-tabs top"> <!-- Creates a tabbed view with top nav -->
 
   <ul class="tabs-nav">
+    <li><a href="#item0">Commentaires</a></li>
 {% if admin %}
-    <li><a href="#item0">Ajout de commentaire</a></li>
+    <li><a href="#item1">Ajout de commentaire</a></li>
 {% endif %}
-    <li><a href="#item1">Commentaires</a></li>
     <li><a href="#item2">Pi&egrave;ces jointes</a></li>
   </ul>
 
-{% if admin %}
     <div id="item0" class="tabs-content">
-     <form action="/addCommentaire2Incident" method="post">
-      <input type="hidden" name="id" value="{{ incident.key.id }}" />
-      <table class="form">
-       <tr>
-        <td><input name="texte" value="" size="48"/></td>
-        <td>&nbsp;</td>
-        <td><input class="submit" type="submit" value="Ajouter"/></td>
-       </tr>
-      </table>
-     </form>
-    </div>
-{% endif %}
-
-    <div id="item1" class="tabs-content">
 
  <table class="ink-table alternating hover">
   <thead>
@@ -88,7 +73,24 @@
 
     </div>
 
+{% if admin %}
     <div id="item1" class="tabs-content">
+     <form action="/addCommentaireIncident" method="post">
+      <input type="hidden" name="id" value="{{ incident.key.id }}" />
+      <table class="form" cellpadding="5">
+       <tr>
+        <td><textarea name="texte" rows="4" cols="48"></textarea></td>
+       </tr>
+       <tr>
+        <td align="center"><input class="submit" type="submit" value="Ajouter"/></td>
+       </tr>
+      </table>
+     </form>
+    </div>
+{% endif %}
+
+    <div id="item2" class="tabs-content">
+     <p>Pas de pi&egrave;ces jointes.</p>
     </div>
 
 </div>

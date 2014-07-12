@@ -26,7 +26,7 @@
     <td><a href="/modele/{{ imp.modele.key.id }}">{{ imp.modele.nom }}</a></td>
     <td>{{ imp.statut }}</td>
     <td>{% if imp.utilisateur %}<a href="/contact/{{ imp.utilisateur.key.id }}">{{ imp.utilisateur }}</a>{% endif %}</td>
-    <td><a href="/editImprimante?id={{ imp.key.id }}"><i class="icon-edit"></i></a></td>
+    <td><a href="/editImprimante?id={{ imp.key.id }}"><i class="fa fa-edit"></i></a></td>
    </tr>
   {% endfor %}
   </tbody>

@@ -21,10 +21,10 @@
   {% for app in applications %}
    <tr>
     <td><a href="/application/{{ app.key.id }}">{{ app.nom }}</a></td>
-    <td>{% if app.actif %}OUI{% else %}NON{% endif %}</td>
+    <td align="center">{% if app.actif %}OUI{% else %}NON{% endif %}</td>
     <td class="hide-small show-medium show-large">{% if app.description %}{{ app.description }}{% endif %}</td>
-    <td><a href="/application_charts/{{ app.key.id }}"><i class="icon-bar-chart"></i></a></td>
-    <td><a href="/editApplication?id={{ app.key.id }}"><i class="icon-edit"></i></a></td>
+    <td><a href="/application_charts/{{ app.key.id }}"><i class="fa fa-bar-chart-o"></i></a></td>
+    <td><a href="/editApplication?id={{ app.key.id }}"><i class="fa fa-edit"></i></a></td>
    </tr>
   {% endfor %}
   </tbody>

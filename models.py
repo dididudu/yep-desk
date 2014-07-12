@@ -208,22 +208,21 @@ class MesureHebdoAppli(db.Model):
   nb_g3 = db.IntegerProperty()
   nb_g4 = db.IntegerProperty()
 
-class VersionApplication(db.Model):
+class VersionApplication(Objet):
   application = db.ReferenceProperty(Application, collection_name='versions')
   numero = db.StringProperty()
   date_prevue = db.DateProperty()
   date_effective = db.DateProperty()
   commentaire = db.TextProperty()
 
-class FicheTest(db.Model):
+class FicheTest(Objet):
   application = db.ReferenceProperty(Application, collection_name='fiches')
-  redacteur = db.ReferenceProperty(Contact)
   code = db.StringProperty()
   nom = db.StringProperty()
   fichier = db.StringProperty()
   commentaire = db.TextProperty()
 
-class Test(db.Model):
+class Test(Objet):
   fiche = db.ReferenceProperty(FicheTest)
   version = db.ReferenceProperty(VersionApplication)
   testeur = db.ReferenceProperty(Contact)
@@ -232,7 +231,7 @@ class Test(db.Model):
   resultat = db.StringProperty()
   commentaire= db.TextProperty()
 
-class Defaut(db.Model):
+class Defaut(Objet):
   test = db.ReferenceProperty(Test)
   version = db.ReferenceProperty(VersionApplication)
   code = db.StringProperty()

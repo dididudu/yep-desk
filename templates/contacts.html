@@ -24,7 +24,7 @@
     <td>{% if ct.organisation %}<a href="/organisation/{{ ct.organisation.key.id }}">{{ ct.organisation.nom }}</a>{% endif %}</td>
     <td>{{ ct.email }}</td>
     <td>{{ ct.telephone }}</td>
-    <td><a href="/editContact?id={{ ct.key.id }}"><i class="icon-edit"></i></a></td>
+    <td><a href="/editContact?id={{ ct.key.id }}"><i class="fa fa-edit"></i></a></td>
    </tr>
   {% endfor %}
   </tbody>

@@ -28,7 +28,7 @@
     <td>{{ ordi.statut }}</td>
     <td>{{ ordi.systeme.code }}</td>
     <td>{% if ordi.utilisateur %}<a href="/contact/{{ ordi.utilisateur.key.id }}">{{ ordi.utilisateur }}</a>{% endif %}</td>
-    <td><a href="/editOrdinateur?id={{ ordi.key.id }}"><i class="icon-edit"></i></a></td>
+    <td><a href="/editOrdinateur?id={{ ordi.key.id }}"><i class="fa fa-edit"></i></a></td>
    </tr>
   {% endfor %}
   </tbody>

@@ -172,7 +172,7 @@ class AddMembre2Groupe(webapp2.RequestHandler):
     logging.debug('Finish groupe membre adding')
     self.redirect('/groupe/%s' % g)
 
-class AddCommentaire2Demande(webapp2.RequestHandler):
+class AddCommentaireDemande(webapp2.RequestHandler):
   def post(self):
     logging.debug('Start demande commentaire adding request')
 
@@ -202,9 +202,9 @@ class AddCommentaire2Demande(webapp2.RequestHandler):
       logging.error('There was an error adding commentaire demande')
 
     logging.debug('Finish demande commentaire adding')
-    self.redirect('/demande/%s#item1' % id)
+    self.redirect('/demande/%s#item0' % id)
 
-class AddCommentaire2Incident(webapp2.RequestHandler):
+class AddCommentaireIncident(webapp2.RequestHandler):
   def post(self):
     logging.debug('Start incident commentaire adding request')
 
@@ -234,7 +234,7 @@ class AddCommentaire2Incident(webapp2.RequestHandler):
       logging.error('There was an error adding commentaire incident')
 
     logging.debug('Finish incident commentaire adding')
-    self.redirect('/incident/%s#item1' % id)
+    self.redirect('/incident/%s#item0' % id)
 
 class AddApplication(webapp2.RequestHandler):
   def post(self):
@@ -286,6 +286,35 @@ class AddVersionApplication(BaseRequestHandler):
       logging.error('There was an error adding version application %s' % n)
     logging.debug('Finish version application adding')
     self.redirect('/application/%s#versions' % a)
+
+class AddFicheTestApplication(BaseRequestHandler):
+  def post(self):
+    logging.debug('Start fiche test application adding request')
+    a = self.request.get('id')
+    n = self.request.get('nom')
+    c = self.request.get('commentaire')
+    obj = FicheTest(nom=n,code='',commentaire=c)
+    user = users.GetCurrentUser()
+    if user:
+      logging.info('Fiche test application %s added by user %s' % (n, user.nickname()))
+      obj.created_by = user
+      obj.updated_by = user
+    else:
+      logging.info('Fiche test application %s added by anonymous user' % n)
+
+    try:
+      i = int(a)
+      application = Application.get(db.Key.from_path('Application', i))
+      obj.application = application
+    except:
+      logging.error('There was an error retreiving application %s' % a)
+
+    try:
+      obj.put()
+    except:
+      logging.error('There was an error adding fiche test application %s' % n)
+    logging.debug('Finish fiche test application adding')
+    self.redirect('/application/%s#fiches' % a)
 
 class AddCategorieDemande(BaseRequestHandler):
   def post(self):
