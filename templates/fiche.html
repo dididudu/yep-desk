@@ -19,5 +19,37 @@
 <p class="submit"><a href="/editFicheTest?id={{ fiche.key.id }}">Editer</a></p>
 {% endif %}
 
+<div class="ink-tabs top"> <!-- Creates a tabbed view with top nav -->
+  <ul class="tabs-nav">
+    <li><a href="#tests">Tests</a></li>
+  </ul>
+
+  <div id="tests" class="tabs-content">
+
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Test</th>
+    <th>Version</th>
+    <th>Date</th>
+    <th>R&eacute;sultat</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for t in fiche.tests %}
+   <tr>
+    <td align="left"><a href="/test/{{ t.key.id }}">{{ t.nom }}</a></td>
+    <td align="left"><a href="/version/{{ t.version.key.id }}">{{ t.version.numero }}</a></td>
+    <td align="center">{{ t.quand|date:"j/m/y" }}</td>
+    <td align="center">{{ t.resultat }}</td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+
+  </div>
+
+</div>
+
 {% endif %}
 {% endblock %}

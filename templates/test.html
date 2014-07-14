@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %} - Test {{ test.nom }}{% endblock %}
+
+{% block body %}
+
+ <h4>Test {{ test.nom }}</h4>
+
+{% if user %}
+
+<p>Application : <a href="/application/{{ test.version.application.key.id }}">{{ test.version.application.nom }}</a></p>
+<p>Version : <a href="/version/{{ test.version.key.id }}">{{ test.version.numero }}</a></p>
+<p>Fiche : <a href="/fiche/{{ test.fiche.key.id }}">{{ test.fiche.nom }}</a></p>
+
+{% if test.commentaire %}
+<p>{% autoescape off %}{{ test.commentaire }}{% endautoescape %}</p>
+{% endif %}
+
+{% if admin %}
+<p class="submit"><a href="/editTest?id={{ test.key.id }}">Editer</a></p>
+{% endif %}
+
+{% endif %}
+{% endblock %}

@@ -318,6 +318,43 @@ class AddFicheTestApplication(BaseRequestHandler):
     logging.debug('Finish fiche test application adding')
     self.redirect('/application/%s#fiches' % a)
 
+class AddTest(BaseRequestHandler):
+  def post(self):
+    logging.debug('Start test adding request')
+    v = self.request.get('id')
+    f = self.request.get('fiche')
+    n = self.request.get('nom')
+    c = self.request.get('commentaire')
+    obj = Test(nom=n,code='',commentaire=c)
+    user = users.GetCurrentUser()
+    if user:
+      logging.info('Test %s added by user %s' % (n, user.nickname()))
+      obj.created_by = user
+      obj.updated_by = user
+    else:
+      logging.info('Test %s added by anonymous user' % n)
+
+    try:
+      i = int(v)
+      version = VersionApplication.get(db.Key.from_path('VersionApplication', i))
+      obj.version = version
+    except:
+      logging.error('There was an error retreiving version %s' % v)
+
+    try:
+      i = int(f)
+      fiche = FicheTest.get(db.Key.from_path('FicheTest', i))
+      obj.fiche = fiche
+    except:
+      logging.error('There was an error retreiving version %s' % v)
+
+    try:
+      obj.put()
+    except:
+      logging.error('There was an error adding test %s' % n)
+    logging.debug('Finish test adding')
+    self.redirect('/version/%s#tests' % v)
+
 class AddCategorieDemande(BaseRequestHandler):
   def post(self):
     logging.debug('Start categorie demande adding request')
@@ -1567,6 +1604,31 @@ class ViewSystemeExploitation(BaseRequestHandler):
       'systeme': systeme
     }
     self.generate('systeme.html', template_values)
+
+class ViewTest(BaseRequestHandler):
+  def get(self, arg):
+    title = 'test introuvable'
+    test = None
+    # Get and displays the test informations
+    try:
+      id = int(arg)
+      test = Test.get(db.Key.from_path('Test', id))
+    except:
+      test = None
+      logging.error('There was an error retreiving test and its informations from the datastore')
+
+    if not test:
+      self.error(403)
+      return
+    else:
+      title = test.nom
+
+    template_values = {
+      'title': title,
+      'test': test
+      }
+
+    self.generate('test.html', template_values)
 
 class EditApplication(BaseRequestHandler):
   def go(self, id, form):

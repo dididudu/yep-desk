@@ -33,6 +33,7 @@ from actions import AddOrganisation
 from actions import AddSite
 from actions import AddStatut
 from actions import AddSystemeExploitation
+from actions import AddTest
 from actions import AddVersionApplication
 from actions import EditApplication
 from actions import EditCategorieDemande
@@ -90,6 +91,7 @@ from actions import ViewOrganisation
 from actions import ViewSite
 from actions import ViewStatut
 from actions import ViewSystemeExploitation
+from actions import ViewTest
 from actions import ViewVersionApplication
 
 class MainPage(BaseRequestHandler):
@@ -216,6 +218,8 @@ application = webapp2.WSGIApplication([
   ('/editSysteme', EditSystemeExploitation),
   ('/systeme/([-\w]+)', ViewSystemeExploitation),
   ('/systemes', ListSystemeExploitations),
+  ('/addTest', AddTest),
+  ('/test/([-\w]+)', ViewTest),
   ('/addVersionApplication', AddVersionApplication),
   ('/version/([-\w]+)', ViewVersionApplication)
 ], debug=True)

@@ -18,5 +18,68 @@
 <p class="submit"><a href="/editVersionApplication?id={{ version.key.id }}">Editer</a></p>
 {% endif %}
 
+<div class="ink-tabs top"> <!-- Creates a tabbed view with top nav -->
+  <ul class="tabs-nav">
+    <li><a href="#tests">Tests</a></li>
+{% if admin %}
+    <li><a href="#ajout">Ajout de test</a></li>
+{% endif %}
+  </ul>
+
+  <div id="tests" class="tabs-content">
+
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Test</th>
+    <th>Fiche</th>
+    <th>Date</th>
+    <th>R&eacute;sultat</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for t in version.tests %}
+   <tr>
+    <td align="left"><a href="/test/{{ t.key.id }}">{{ t.nom }}</a></td>
+    <td align="left"><a href="/fiche/{{ t.fiche.key.id }}">{{ t.fiche.nom }}</a></td>
+    <td align="center">{{ t.quand|date:"j/m/y" }}</td>
+    <td align="center">{{ t.resultat }}</td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+
+  </div>
+
+{% if admin %}
+  <div id="ajout" class="tabs-content">
+   <form action="/addTest" method="post">
+    <input type="hidden" name="id" value="{{ version.key.id }}" />
+    <table class="form" cellpadding="5">
+     <tr>
+      <td><label>Nom</label> : <input name="nom" size="32" value=""/></td>
+     </tr>
+     <tr>
+      <td><label>Fiche</label> :
+       <select name="fiche">
+       {% for f in version.application.fiches %}
+        <option value="{{ f.key.id }}">{{ f.nom }}</option>
+       {% endfor %}
+       </select>
+      </td>
+     </tr>
+     <tr>
+      <td><textarea name="commentaire" rows="4" cols="48"></textarea></td>
+     </tr>
+     <tr>
+      <td align="center"><input class="submit" type="submit" value="Ajouter"/></td>
+     </tr>
+    </table>
+   </form>
+  </div>
+{% endif %}
+
+</div>
+
 {% endif %}
 {% endblock %}

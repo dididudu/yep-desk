@@ -223,8 +223,8 @@ class FicheTest(Objet):
   commentaire = db.TextProperty()
 
 class Test(Objet):
-  fiche = db.ReferenceProperty(FicheTest)
-  version = db.ReferenceProperty(VersionApplication)
+  fiche = db.ReferenceProperty(FicheTest, collection_name='tests')
+  version = db.ReferenceProperty(VersionApplication, collection_name='tests')
   testeur = db.ReferenceProperty(Contact)
   nom = db.StringProperty()
   quand = db.DateProperty()
