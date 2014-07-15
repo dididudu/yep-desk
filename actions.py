@@ -63,6 +63,7 @@ from forms import SiteForm
 from forms import StatutForm
 from forms import SystemeExploitationForm
 from forms import VersionApplicationForm
+from forms import TestForm
 
 # Set to true if we want to have our webapp print stack traces, etc
 _DEBUG = True
@@ -2437,5 +2438,50 @@ class EditSystemeExploitation(BaseRequestHandler):
       except:
         logging.error('There was an error updating systeme %s' % self.request.get('nom'))
       self.redirect('/systeme/%s' % id)
+    else:
+      self.go(id, form)
+
+class EditTest(BaseRequestHandler):
+  def go(self, id, form):
+    values = {
+      'title': "Edition de test",
+      'action': "/editTest",
+      'id': id,
+      'form': form
+    }
+    self.generate('editTest.html', values)
+
+  def get(self):
+    obj = None
+    try:
+      id = int(self.request.get('id'))
+      obj = Test.get(db.Key.from_path('Test', id))
+    except:
+      obj = None
+    if not obj:
+      self.error(403)
+      return
+    self.go(id, TestForm(None, obj))
+
+  def post(self):
+    obj = None
+    try:
+      id = int(self.request.get('_id'))
+      obj = Test.get(db.Key.from_path('Test', id))
+    except:
+      obj = None
+    if not obj:
+      self.error(403)
+      return
+    form = TestForm(self.request.POST, obj)
+    if form.validate():
+      logging.info('Test %d updated by user %s' % (id, users.GetCurrentUser().nickname()))
+      form.populate_obj(obj)
+      obj.updated_by = users.GetCurrentUser()
+      try:
+        obj.put()
+      except:
+        logging.error('There was an error updating test %s' % self.request.get('nom'))
+      self.redirect('/test/%s' % id)
     else:
       self.go(id, form)
