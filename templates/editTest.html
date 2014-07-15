@@ -25,6 +25,22 @@
           {% if form.nom.errors %}<p class="tip">{{form.nom.errors}}</p>{% endif %}
         </div>
 
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.version.label }}
+          <div class="control">
+            {{ form.version }}
+          </div>
+          {% if form.version.errors %}<p class="tip">{{form.version.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.fiche.label }}
+          <div class="control">
+            {{ form.fiche }}
+          </div>
+          {% if form.fiche.errors %}<p class="tip">{{form.fiche.errors}}</p>{% endif %}
+        </div>
+
         <div class="control-group large-100 medium-100 small-100">
           {{ form.commentaire.label }}
           <div class="control">

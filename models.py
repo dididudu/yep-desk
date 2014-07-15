@@ -214,6 +214,8 @@ class VersionApplication(Objet):
   date_prevue = db.DateProperty()
   date_effective = db.DateProperty()
   commentaire = db.TextProperty()
+  def __str__(self):
+    return self.numero
 
 class FicheTest(Objet):
   application = db.ReferenceProperty(Application, collection_name='fiches')
@@ -221,6 +223,8 @@ class FicheTest(Objet):
   nom = db.StringProperty()
   fichier = db.StringProperty()
   commentaire = db.TextProperty()
+  def __str__(self):
+    return self.nom
 
 class Test(Objet):
   fiche = db.ReferenceProperty(FicheTest, collection_name='tests')
@@ -230,6 +234,8 @@ class Test(Objet):
   quand = db.DateProperty()
   resultat = db.StringProperty()
   commentaire= db.TextProperty()
+  def __str__(self):
+    return self.nom
 
 class Defaut(Objet):
   test = db.ReferenceProperty(Test)
@@ -257,3 +263,5 @@ class Defaut(Objet):
   validation = db.TextProperty()
   commentaire= db.TextProperty()
   historique = db.TextProperty()
+  def __str__(self):
+    return self.code
