@@ -32,6 +32,7 @@ from models import Statut
 from models import SystemeExploitation
 from models import Tablette
 from models import VersionApplication
+from models import Test
 
 class ApplicationForm(Form):
   nom = TextField(u'Nom', validators=[validators.required()])
@@ -171,3 +172,6 @@ class TabletteForm(Form):
   achat = DateField(u'Achat')
   garantie = IntegerField(u'Garantie')
   maintenu = BooleanField(u'Maintenu')
+
+class TestForm(Form):
+  nom = TextField(u'Nom', validators=[validators.required()])
