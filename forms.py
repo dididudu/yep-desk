@@ -79,11 +79,6 @@ class FabricantForm(Form):
   nom = TextField(u'Nom', validators=[validators.required()])
   description = TextAreaField(u'Description', validators=[validators.optional()])
 
-class FicheTestForm(Form):
-  nom = TextField(u'Nom', validators=[validators.required()])
-  code = TextField(u'Code', validators=[validators.optional()])
-  commentaire = TextAreaField(u'Commentaire', validators=[validators.optional()])
-
 class FonctionForm(Form):
   nom = TextField(u'Nom', validators=[validators.required()])
   description = TextAreaField(u'Description', validators=[validators.optional()])
@@ -168,7 +163,15 @@ class TabletteForm(Form):
   garantie = IntegerField(u'Garantie')
   maintenu = BooleanField(u'Maintenu')
 
+class FicheTestForm(Form):
+  application = ReferencePropertyField(u'Application', reference_class=Application)
+  nom = TextField(u'Nom', validators=[validators.required()])
+  code = TextField(u'Code', validators=[validators.optional()])
+  commentaire = TextAreaField(u'Commentaire', validators=[validators.optional()])
+
 class TestForm(Form):
+  fiche = ReferencePropertyField(u'Fiche', reference_class=FicheTest)
+  version = ReferencePropertyField(u'Version', reference_class=VersionApplication)
   nom = TextField(u'Nom', validators=[validators.required()])
   commentaire = TextAreaField(u'Commentaire', validators=[validators.optional()])
 
