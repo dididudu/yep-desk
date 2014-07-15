@@ -58,6 +58,15 @@ class ContactForm(Form):
   telephone = TextField(u'Telephone')
   actif = BooleanField(u'Actif')
 
+class DemandeForm(Form):
+  etat = ReferencePropertyField(u'Etat', reference_class=EtatDemande)
+  categorie = ReferencePropertyField(u'Categorie', reference_class=CategorieDemande)
+  demandeur = ReferencePropertyField(u'Demandeur', reference_class=Contact)
+  affecte = ReferencePropertyField(u'Affecte', reference_class=Groupe)
+  reference = TextField(u'Reference', validators=[validators.required()])
+  resume = TextField(u'Resume')
+  description = TextAreaField(u'Description', validators=[validators.optional()])
+
 class EtatDemandeForm(Form):
   nom = TextField(u'Nom', validators=[validators.required()])
   description = TextAreaField(u'Description', validators=[validators.optional()])
@@ -94,15 +103,6 @@ class ImprimanteForm(Form):
   garantie = IntegerField(u'Garantie')
   maintenu = BooleanField(u'Maintenu')
 
-class DemandeForm(Form):
-  etat = ReferencePropertyField(u'Etat', reference_class=EtatDemande)
-  categorie = ReferencePropertyField(u'Categorie', reference_class=CategorieDemande)
-  demandeur = ReferencePropertyField(u'Demandeur', reference_class=Contact)
-  affecte = ReferencePropertyField(u'Affecte', reference_class=Groupe)
-  reference = TextField(u'Reference', validators=[validators.required()])
-  resume = TextField(u'Resume')
-  description = TextAreaField(u'Description', validators=[validators.optional()])
-
 class IncidentForm(Form):
   etat = ReferencePropertyField(u'Etat', reference_class=EtatIncident)
   categorie = ReferencePropertyField(u'Categorie', reference_class=CategorieIncident)
@@ -120,11 +120,6 @@ class MesureApplicationForm(Form):
   temps_moy = FloatField(u'Temps moy.')
   nb_transactions = IntegerField(u'Nombre trans.')
   nb_sessions = IntegerField(u'Nombre sessions')
-
-class VersionApplicationForm(Form):
-  application = ReferencePropertyField(u'Application', reference_class=Application)
-  numero = TextField(u'Numero', validators=[validators.required()])
-  commentaire = TextAreaField(u'Commentaire', validators=[validators.optional()])
 
 class ModeleForm(Form):
   fabricant = ReferencePropertyField(u'Fabricant', reference_class=Fabricant)
@@ -175,3 +170,10 @@ class TabletteForm(Form):
 
 class TestForm(Form):
   nom = TextField(u'Nom', validators=[validators.required()])
+  commentaire = TextAreaField(u'Commentaire', validators=[validators.optional()])
+
+class VersionApplicationForm(Form):
+  application = ReferencePropertyField(u'Application', reference_class=Application)
+  numero = TextField(u'Numero', validators=[validators.required()])
+  commentaire = TextAreaField(u'Commentaire', validators=[validators.optional()])
+
