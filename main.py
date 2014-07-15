@@ -43,6 +43,7 @@ from actions import EditDemande
 from actions import EditEtatDemande
 from actions import EditEtatIncident
 from actions import EditFabricant
+from actions import EditFicheTest
 from actions import EditFonction
 from actions import EditGroupe
 from actions import EditImprimante
@@ -54,6 +55,7 @@ from actions import EditSite
 from actions import EditStatut
 from actions import EditSystemeExploitation
 from actions import EditTest
+from actions import EditVersionApplication
 from actions import ListApplications
 from actions import ListCategoriesDemande
 from actions import ListCategoriesIncident
@@ -170,6 +172,7 @@ application = webapp2.WSGIApplication([
   ('/editEtatIncident', EditEtatIncident),
   ('/etatIncident/([-\w]+)', ViewEtatIncident),
   ('/etatsIncident', ListEtatsIncident),
+  ('/editFicheTest', EditFicheTest),
   ('/fiche/([-\w]+)', ViewFicheTest),
   ('/addFabricant', AddFabricant),
   ('/editFabricant', EditFabricant),
@@ -223,5 +226,6 @@ application = webapp2.WSGIApplication([
   ('/editTest', EditTest),
   ('/test/([-\w]+)', ViewTest),
   ('/addVersionApplication', AddVersionApplication),
+  ('/editVersionApplication', EditVersionApplication),
   ('/version/([-\w]+)', ViewVersionApplication)
 ], debug=True)
