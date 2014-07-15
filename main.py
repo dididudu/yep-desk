@@ -53,6 +53,7 @@ from actions import EditOrganisation
 from actions import EditSite
 from actions import EditStatut
 from actions import EditSystemeExploitation
+from actions import EditTest
 from actions import ListApplications
 from actions import ListCategoriesDemande
 from actions import ListCategoriesIncident
@@ -219,6 +220,7 @@ application = webapp2.WSGIApplication([
   ('/systeme/([-\w]+)', ViewSystemeExploitation),
   ('/systemes', ListSystemeExploitations),
   ('/addTest', AddTest),
+  ('/editTest', EditTest),
   ('/test/([-\w]+)', ViewTest),
   ('/addVersionApplication', AddVersionApplication),
   ('/version/([-\w]+)', ViewVersionApplication)
