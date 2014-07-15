@@ -1811,6 +1811,51 @@ class EditContact(BaseRequestHandler):
     else:
       self.go(id, form)
 
+class EditDemande(BaseRequestHandler):
+  def go(self, id, form):
+    values = {
+      'title': "Edition de demande",
+      'action': "/editDemande",
+      'id': id,
+      'form': form
+    }
+    self.generate('editDemande.html', values)
+
+  def get(self):
+    obj = None
+    try:
+      id = int(self.request.get('id'))
+      obj = Demande.get(db.Key.from_path('Demande', id))
+    except:
+      obj = None
+    if not obj:
+      self.error(403)
+      return
+    self.go(id, DemandeForm(None, obj))
+
+  def post(self):
+    obj = None
+    try:
+      id = int(self.request.get('_id'))
+      obj = Demande.get(db.Key.from_path('Demande', id))
+    except:
+      obj = None
+    if not obj:
+      self.error(403)
+      return
+    form = DemandeForm(self.request.POST, obj)
+    if form.validate():
+      logging.info('Demande %d updated by user %s' % (id, users.GetCurrentUser().nickname()))
+      form.populate_obj(obj)
+      obj.updated_by = users.GetCurrentUser()
+      try:
+        obj.put()
+      except:
+        logging.error('There was an error updating demande %s' % self.request.get('nom'))
+      self.redirect('/demande/%s' % id)
+    else:
+      self.go(id, form)
+
 class EditEtatDemande(BaseRequestHandler):
   def go(self, id, form):
     values = {
@@ -1946,6 +1991,51 @@ class EditFabricant(BaseRequestHandler):
     else:
       self.go(id, form)
 
+class EditFicheTest(BaseRequestHandler):
+  def go(self, id, form):
+    values = {
+      'title': "Edition de fiche de test",
+      'action': "/editFicheTest",
+      'id': id,
+      'form': form
+    }
+    self.generate('editFicheTest.html', values)
+
+  def get(self):
+    obj = None
+    try:
+      id = int(self.request.get('id'))
+      obj = FicheTest.get(db.Key.from_path('FicheTest', id))
+    except:
+      obj = None
+    if not obj:
+      self.error(403)
+      return
+    self.go(id, FicheTestForm(None, obj))
+
+  def post(self):
+    obj = None
+    try:
+      id = int(self.request.get('_id'))
+      obj = FicheTest.get(db.Key.from_path('FicheTest', id))
+    except:
+      obj = None
+    if not obj:
+      self.error(403)
+      return
+    form = FicheTestForm(self.request.POST, obj)
+    if form.validate():
+      logging.info('Fiche de test %d updated by user %s' % (id, users.GetCurrentUser().nickname()))
+      form.populate_obj(obj)
+      obj.updated_by = users.GetCurrentUser()
+      try:
+        obj.put()
+      except:
+        logging.error('There was an error updating fiche de test %s' % self.request.get('nom'))
+      self.redirect('/fiche/%s' % id)
+    else:
+      self.go(id, form)
+
 class EditFonction(BaseRequestHandler):
   def go(self, id, form):
     values = {
@@ -2078,51 +2168,6 @@ class EditImprimante(BaseRequestHandler):
       except:
         logging.error('There was an error updating imprimante %s' % self.request.get('nom'))
       self.redirect('/imprimante/%s' % id)
-    else:
-      self.go(id, form)
-
-class EditDemande(BaseRequestHandler):
-  def go(self, id, form):
-    values = {
-      'title': "Edition de demande",
-      'action': "/editDemande",
-      'id': id,
-      'form': form
-    }
-    self.generate('editDemande.html', values)
-
-  def get(self):
-    obj = None
-    try:
-      id = int(self.request.get('id'))
-      obj = Demande.get(db.Key.from_path('Demande', id))
-    except:
-      obj = None
-    if not obj:
-      self.error(403)
-      return
-    self.go(id, DemandeForm(None, obj))
-
-  def post(self):
-    obj = None
-    try:
-      id = int(self.request.get('_id'))
-      obj = Demande.get(db.Key.from_path('Demande', id))
-    except:
-      obj = None
-    if not obj:
-      self.error(403)
-      return
-    form = DemandeForm(self.request.POST, obj)
-    if form.validate():
-      logging.info('Demande %d updated by user %s' % (id, users.GetCurrentUser().nickname()))
-      form.populate_obj(obj)
-      obj.updated_by = users.GetCurrentUser()
-      try:
-        obj.put()
-      except:
-        logging.error('There was an error updating demande %s' % self.request.get('nom'))
-      self.redirect('/demande/%s' % id)
     else:
       self.go(id, form)
 
