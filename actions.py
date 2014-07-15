@@ -62,8 +62,8 @@ from forms import OrganisationForm
 from forms import SiteForm
 from forms import StatutForm
 from forms import SystemeExploitationForm
-from forms import VersionApplicationForm
 from forms import TestForm
+from forms import VersionApplicationForm
 
 # Set to true if we want to have our webapp print stack traces, etc
 _DEBUG = True
@@ -2485,3 +2485,49 @@ class EditTest(BaseRequestHandler):
       self.redirect('/test/%s' % id)
     else:
       self.go(id, form)
+
+class EditVersionApplication(BaseRequestHandler):
+  def go(self, id, form):
+    values = {
+      'title': "Edition de version",
+      'action': "/editVersionApplication",
+      'id': id,
+      'form': form
+    }
+    self.generate('editVersionApplication.html', values)
+
+  def get(self):
+    obj = None
+    try:
+      id = int(self.request.get('id'))
+      obj = VersionApplication.get(db.Key.from_path('VersionApplication', id))
+    except:
+      obj = None
+    if not obj:
+      self.error(403)
+      return
+    self.go(id, VersionApplicationForm(None, obj))
+
+  def post(self):
+    obj = None
+    try:
+      id = int(self.request.get('_id'))
+      obj = VersionApplication.get(db.Key.from_path('VersionApplication', id))
+    except:
+      obj = None
+    if not obj:
+      self.error(403)
+      return
+    form = VersionApplicationForm(self.request.POST, obj)
+    if form.validate():
+      logging.info('Version %d updated by user %s' % (id, users.GetCurrentUser().nickname()))
+      form.populate_obj(obj)
+      obj.updated_by = users.GetCurrentUser()
+      try:
+        obj.put()
+      except:
+        logging.error('There was an error updating version %s' % self.request.get('numero'))
+      self.redirect('/version/%s' % id)
+    else:
+      self.go(id, form)
+
