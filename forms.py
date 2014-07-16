@@ -165,18 +165,24 @@ class TabletteForm(Form):
 
 class FicheTestForm(Form):
   application = ReferencePropertyField(u'Application', reference_class=Application)
-  nom = TextField(u'Nom', validators=[validators.required()])
   code = TextField(u'Code', validators=[validators.optional()])
+  nom = TextField(u'Nom', validators=[validators.required()])
+  fichier = TextField(u'Fichier', validators=[validators.optional()])
   commentaire = TextAreaField(u'Commentaire', validators=[validators.optional()])
 
 class TestForm(Form):
   fiche = ReferencePropertyField(u'Fiche', reference_class=FicheTest)
   version = ReferencePropertyField(u'Version', reference_class=VersionApplication)
+  testeur = ReferencePropertyField(u'testeur', reference_class=Contact)
   nom = TextField(u'Nom', validators=[validators.required()])
+  quand = DateField(u'Date')
+  resultat = SelectField(u'Resultat', choices=[('En cours', 'En cours'), ('OK', 'OK'), ('NOK', 'NOK')])
   commentaire = TextAreaField(u'Commentaire', validators=[validators.optional()])
 
 class VersionApplicationForm(Form):
   application = ReferencePropertyField(u'Application', reference_class=Application)
   numero = TextField(u'Numero', validators=[validators.required()])
+  date_prevue = DateField(u'Date prevue')
+  date_effective = DateField(u'Date effective')
   commentaire = TextAreaField(u'Commentaire', validators=[validators.optional()])
 
