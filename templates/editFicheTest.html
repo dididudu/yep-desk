@@ -41,6 +41,14 @@
           {% if form.application.errors %}<p class="tip">{{form.application.errors}}</p>{% endif %}
         </div>
 
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.fichier.label }}
+          <div class="control">
+            {{ form.fichier }}
+          </div>
+          {% if form.fichier.errors %}<p class="tip">{{form.fichier.errors}}</p>{% endif %}
+        </div>
+
         <div class="control-group large-100 medium-100 small-100">
           {{ form.commentaire.label }}
           <div class="control">
