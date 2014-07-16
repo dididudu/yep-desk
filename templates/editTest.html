@@ -34,11 +34,35 @@
         </div>
 
         <div class="control-group large-50 medium-50 small-100">
+          {{ form.testeur.label }}
+          <div class="control">
+            {{ form.testeur }}
+          </div>
+          {% if form.testeur.errors %}<p class="tip">{{form.testeur.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
           {{ form.fiche.label }}
           <div class="control">
             {{ form.fiche }}
           </div>
           {% if form.fiche.errors %}<p class="tip">{{form.fiche.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.quand.label }}
+          <div class="control">
+            {{ form.quand }}
+          </div>
+          {% if form.quand.errors %}<p class="tip">{{form.quand.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.resultat.label }}
+          <div class="control">
+            {{ form.resultat }}
+          </div>
+          {% if form.resultat.errors %}<p class="tip">{{form.resultat.errors}}</p>{% endif %}
         </div>
 
         <div class="control-group large-100 medium-100 small-100">
