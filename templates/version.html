@@ -24,7 +24,7 @@
 {% if admin %}
     <li><a href="#ajout">Ajout de test</a></li>
 {% endif %}
-    <li><a href="#defauts">Tests</a></li>
+    <li><a href="#defauts">D&eacute;fauts</a></li>
   </ul>
 
   <div id="tests" class="tabs-content">
@@ -81,7 +81,22 @@
 {% endif %}
 
   <div id="defauts" class="tabs-content">
-   <p>Pas de d&eacute;faut encore...</p>
+
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Defaut</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for d in version.defauts %}
+   <tr>
+    <td align="left"><a href="/defaut/{{ d.key.id }}">{{ d.code }}</a></td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+
   </div>
 
  

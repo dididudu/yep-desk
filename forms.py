@@ -61,7 +61,7 @@ class ContactForm(Form):
 
 class DefautForm(Form):
   test = ReferencePropertyField(u'Test', reference_class=Test)
-  version = ReferencePropertyField(u'Version', reference_class=Version)
+  version = ReferencePropertyField(u'Version', reference_class=VersionApplication)
   code = TextField(u'Code', validators=[validators.required()])
   gravite = TextField(u'Gravite', validators=[validators.optional()])
   nature = TextField(u'Nature', validators=[validators.optional()])
@@ -183,7 +183,7 @@ class FicheTestForm(Form):
 class TestForm(Form):
   fiche = ReferencePropertyField(u'Fiche', reference_class=FicheTest)
   version = ReferencePropertyField(u'Version', reference_class=VersionApplication)
-  testeur = ReferencePropertyField(u'testeur', reference_class=Contact)
+  testeur = ReferencePropertyField(u'Testeur', reference_class=Contact)
   nom = TextField(u'Nom', validators=[validators.required()])
   quand = DateField(u'Date')
   resultat = SelectField(u'Resultat', choices=[('En cours', 'En cours'), ('OK', 'OK'), ('NOK', 'NOK')])

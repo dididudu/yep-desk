@@ -39,7 +39,6 @@ from actions import EditApplication
 from actions import EditCategorieDemande
 from actions import EditCategorieIncident
 from actions import EditContact
-from actions import EditDefaut
 from actions import EditDemande
 from actions import EditEtatDemande
 from actions import EditEtatIncident
@@ -82,6 +81,7 @@ from actions import ViewApplication
 from actions import ViewCategorieDemande
 from actions import ViewCategorieIncident
 from actions import ViewContact
+from actions import ViewDefaut
 from actions import ViewDemande
 from actions import ViewEtatDemande
 from actions import ViewEtatIncident
