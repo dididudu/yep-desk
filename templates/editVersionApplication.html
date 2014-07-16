@@ -33,6 +33,22 @@
           {% if form.numero.errors %}<p class="tip">{{form.numero.errors}}</p>{% endif %}
         </div>
 
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.date_prevue.label }}
+          <div class="control">
+            {{ form.date_prevue }}
+          </div>
+          {% if form.date_prevue.errors %}<p class="tip">{{form.date_prevue.errors}}</p>{% endif %}
+        </div>
+
+        <div class="control-group large-50 medium-50 small-100">
+          {{ form.date_effective.label }}
+          <div class="control">
+            {{ form.date_effective }}
+          </div>
+          {% if form.date_effective.errors %}<p class="tip">{{form.date_effective.errors}}</p>{% endif %}
+        </div>
+
         <div class="control-group large-100 medium-100 small-100">
           {{ form.commentaire.label }}
           <div class="control">
