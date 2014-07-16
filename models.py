@@ -232,7 +232,7 @@ class Test(Objet):
   testeur = db.ReferenceProperty(Contact)
   nom = db.StringProperty()
   quand = db.DateProperty()
-  resultat = db.StringProperty()
+  resultat = db.StringProperty(choices=set(["En cours", "OK", "NOK"]))
   commentaire= db.TextProperty()
   def __str__(self):
     return self.nom
