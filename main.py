@@ -39,6 +39,7 @@ from actions import EditApplication
 from actions import EditCategorieDemande
 from actions import EditCategorieIncident
 from actions import EditContact
+from actions import EditDefaut
 from actions import EditDemande
 from actions import EditEtatDemande
 from actions import EditEtatIncident
@@ -60,6 +61,7 @@ from actions import ListApplications
 from actions import ListCategoriesDemande
 from actions import ListCategoriesIncident
 from actions import ListContacts
+from actions import ListDefauts
 from actions import ListDemandes
 from actions import ListEtatsDemande
 from actions import ListEtatsIncident
@@ -74,6 +76,7 @@ from actions import ListOrganisations
 from actions import ListSites
 from actions import ListStatuts
 from actions import ListSystemeExploitations
+from actions import ListTests
 from actions import ChartsApplication
 from actions import ViewApplication
 from actions import ViewCategorieDemande
@@ -163,6 +166,12 @@ application = webapp2.WSGIApplication([
   ('/editContact', EditContact),
   ('/contact/([-\w]+)', ViewContact),
   ('/contacts', ListContacts),
+  ('/addDemande', AddDemande),
+  ('/editDemande', EditDemande),
+  ('/demande/([-\w]+)', ViewDemande),
+  ('/demandes', ListDemandes),
+  ('/defaut/([-\w]+)', ViewDefaut),
+  ('/defauts', ListDefauts),
   ('/addEtatDemande', AddEtatDemande),
   ('/editEtatDemande', EditEtatDemande),
   ('/etatDemande/([-\w]+)', ViewEtatDemande),
@@ -190,10 +199,6 @@ application = webapp2.WSGIApplication([
   ('/editImprimante', EditImprimante),
   ('/imprimante/([-\w]+)', ViewImprimante),
   ('/imprimantes', ListImprimantes),
-  ('/addDemande', AddDemande),
-  ('/editDemande', EditDemande),
-  ('/demande/([-\w]+)', ViewDemande),
-  ('/demandes', ListDemandes),
   ('/addIncident', AddIncident),
   ('/editIncident', EditIncident),
   ('/incident/([-\w]+)', ViewIncident),
@@ -225,6 +230,7 @@ application = webapp2.WSGIApplication([
   ('/addTest', AddTest),
   ('/editTest', EditTest),
   ('/test/([-\w]+)', ViewTest),
+  ('/tests', ListTests),
   ('/addVersionApplication', AddVersionApplication),
   ('/editVersionApplication', EditVersionApplication),
   ('/version/([-\w]+)', ViewVersionApplication)
