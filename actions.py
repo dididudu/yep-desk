@@ -46,6 +46,7 @@ from forms import ApplicationForm
 from forms import CategorieDemandeForm
 from forms import CategorieIncidentForm
 from forms import ContactForm
+from forms import DefautForm
 from forms import DemandeForm
 from forms import EtatDemandeForm
 from forms import EtatIncidentForm
@@ -831,6 +832,34 @@ class ListContacts(BaseRequestHandler):
     }
     self.generate('contacts.html', template_values)
 
+class ListDefauts(BaseRequestHandler):
+  def get(self):
+    defauts = []
+    title = 'Defauts'
+    try:
+      defauts = Defaut.gql("ORDER BY code")
+    except:
+      logging.error('There was an error retreiving defauts from the datastore')
+    template_values = {
+      'title': title,
+      'defauts': defauts
+    }
+    self.generate('defauts.html', template_values)
+
+class ListDemandes(BaseRequestHandler):
+  def get(self):
+    demandes = []
+    title = 'Demandes'
+    try:
+      demandes = Demande.gql("ORDER BY reference")
+    except:
+      logging.error('There was an error retreiving demandes from the datastore')
+    template_values = {
+      'title': title,
+      'demandes': demandes
+    }
+    self.generate('demandes.html', template_values)
+
 class ListEtatsDemande(BaseRequestHandler):
   def get(self):
     etats = []
@@ -923,20 +952,6 @@ class ListImprimantes(BaseRequestHandler):
       'statuts': statuts
     }
     self.generate('imprimantes.html', template_values)
-
-class ListDemandes(BaseRequestHandler):
-  def get(self):
-    demandes = []
-    title = 'Demandes'
-    try:
-      demandes = Demande.gql("ORDER BY reference")
-    except:
-      logging.error('There was an error retreiving demandes from the datastore')
-    template_values = {
-      'title': title,
-      'demandes': demandes
-    }
-    self.generate('demandes.html', template_values)
 
 class ListIncidents(BaseRequestHandler):
   def get(self):
@@ -1051,6 +1066,20 @@ class ListSystemeExploitations(BaseRequestHandler):
       'systemes': systemes
     }
     self.generate('systemes.html', template_values)
+
+class ListTests(BaseRequestHandler):
+  def get(self):
+    tests = []
+    title = 'Tests'
+    try:
+      tests = Test.gql("ORDER BY nom")
+    except:
+      logging.error('There was an error retreiving tests from the datastore')
+    template_values = {
+      'title': title,
+      'tests': tests
+    }
+    self.generate('tests.html', template_values)
 
 class ViewApplication(BaseRequestHandler):
   def get(self, arg):
@@ -1221,6 +1250,28 @@ class ViewContact(BaseRequestHandler):
       'imprimantes': imprimantes,
     }
     self.generate('contact.html', template_values)
+
+class ViewDefaut(BaseRequestHandler):
+  def get(self, arg):
+    title = 'Defaut introuvable'
+    defaut = None
+    # Get and displays the defaut informations
+    try:
+      id = int(arg)
+      defaut = Defaut.get(db.Key.from_path('Defaut', id))
+    except:
+      defaut = None
+      logging.error('There was an error retreiving defaut and its informations from the datastore')
+    if not defaut:
+      self.error(403)
+      return
+    else:
+      title = defaut.nom
+    template_values = {
+      'title': title,
+      'defaut': defaut
+    }
+    self.generate('defaut.html', template_values)
 
 class ViewEtatDemande(BaseRequestHandler):
   def get(self, arg):
