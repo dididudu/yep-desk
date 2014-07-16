@@ -14,6 +14,7 @@ from models import CategorieIncident
 from models import CommentaireDemande
 from models import CommentaireIncident
 from models import Contact
+from models import Defaut
 from models import Demande
 from models import EtatDemande
 from models import EtatIncident
@@ -57,6 +58,15 @@ class ContactForm(Form):
   email = TextField(u'Email', validators=[validators.Email()])
   telephone = TextField(u'Telephone')
   actif = BooleanField(u'Actif')
+
+class DefautForm(Form):
+  test = ReferencePropertyField(u'Test', reference_class=Test)
+  version = ReferencePropertyField(u'Version', reference_class=Version)
+  code = TextField(u'Code', validators=[validators.required()])
+  gravite = TextField(u'Gravite', validators=[validators.optional()])
+  nature = TextField(u'Nature', validators=[validators.optional()])
+  etat = TextField(u'Etat', validators=[validators.optional()])
+  commentaire = TextAreaField(u'Commentaire', validators=[validators.optional()])
 
 class DemandeForm(Form):
   etat = ReferencePropertyField(u'Etat', reference_class=EtatDemande)
