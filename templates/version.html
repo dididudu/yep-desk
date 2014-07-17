@@ -25,6 +25,9 @@
     <li><a href="#ajout">Ajout de test</a></li>
 {% endif %}
     <li><a href="#defauts">D&eacute;fauts</a></li>
+{% if admin %}
+    <li><a href="#ajout2">Ajout de d&eacute;faut</a></li>
+{% endif %}
   </ul>
 
   <div id="tests" class="tabs-content">
@@ -99,6 +102,33 @@
 
   </div>
 
+{% if admin %}
+  <div id="ajout2" class="tabs-content">
+   <form action="/addDefaut" method="post">
+    <input type="hidden" name="id" value="{{ version.key.id }}" />
+    <table class="form" cellpadding="5">
+     <tr>
+      <td><label>Nom</label> : <input name="nom" size="32" value=""/></td>
+     </tr>
+     <tr>
+      <td><label>Test</label> :
+       <select name="fiche">
+       {% for t in version.tests %}
+        <option value="{{ t.key.id }}">{{ t.nom }}</option>
+       {% endfor %}
+       </select>
+      </td>
+     </tr>
+     <tr>
+      <td><textarea name="commentaire" rows="4" cols="48"></textarea></td>
+     </tr>
+     <tr>
+      <td align="center"><input class="submit" type="submit" value="Ajouter"/></td>
+     </tr>
+    </table>
+   </form>
+  </div>
+{% endif %}
  
 </div>
 
