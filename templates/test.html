@@ -8,8 +8,7 @@
 
 {% if user %}
 
-<p>Application : <a href="/application/{{ test.version.application.key.id }}">{{ test.version.application.nom }}</a></p>
-<p>Version : <a href="/version/{{ test.version.key.id }}">{{ test.version.numero }}</a></p>
+<p>Version : <a href="/application/{{ test.version.application.key.id }}">{{ test.version.application.nom }}</a> <a href="/version/{{ test.version.key.id }}">{{ test.version.numero }}</a></p>
 <p>Fiche : <a href="/fiche/{{ test.fiche.key.id }}">{{ test.fiche.nom }}</a></p>
 
 {% if test.commentaire %}
@@ -26,7 +25,27 @@
   </ul>
 
   <div id="defauts" class="tabs-content">
- </div>
+
+ <table class="ink-table alternating hover">
+  <thead>
+   <tr>
+    <th>Defaut</th>
+    <th>Version</th>
+    <th>Commentaire</th>
+   </tr>
+  </thead>
+  <tbody>
+  {% for d in test.defauts %}
+   <tr>
+    <td align="center"><a href="/defaut/{{ d.key.id }}">{{ d.code }}</a></td>
+    <td align="center"><a href="/version/{{ d.version.key.id }}">{{ d.version.numero }}</a></td>
+    <td align="left">{{ d.commentaire }}</td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+
+  </div>
 </div>
 
 {% endif %}

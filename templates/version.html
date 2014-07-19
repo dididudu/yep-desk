@@ -89,12 +89,16 @@
   <thead>
    <tr>
     <th>Defaut</th>
+    <th>Test</th>
+    <th>Commentaire</th>
    </tr>
   </thead>
   <tbody>
   {% for d in version.defauts %}
    <tr>
-    <td align="left"><a href="/defaut/{{ d.key.id }}">{{ d.code }}</a></td>
+    <td align="center"><a href="/defaut/{{ d.key.id }}">{{ d.code }}</a></td>
+    <td align="center"><a href="/test/{{ d.test.key.id }}">{{ d.test.nom }}</a></td>
+    <td align="left">{{ d.commentaire }}</td>
    </tr>
   {% endfor %}
   </tbody>
@@ -108,11 +112,11 @@
     <input type="hidden" name="id" value="{{ version.key.id }}" />
     <table class="form" cellpadding="5">
      <tr>
-      <td><label>Nom</label> : <input name="nom" size="32" value=""/></td>
+      <td><label>Code</label> : <input name="code" size="32" value=""/></td>
      </tr>
      <tr>
       <td><label>Test</label> :
-       <select name="fiche">
+       <select name="test">
        {% for t in version.tests %}
         <option value="{{ t.key.id }}">{{ t.nom }}</option>
        {% endfor %}

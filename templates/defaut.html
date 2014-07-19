@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %} - Defaut {{ defaut.code }}{% endblock %}
+
+{% block body %}
+
+ <h4>Defaut {{ defaut.code }}</h4>
+
+{% if user %}
+
+<p>Version : <a href="/application/{{ defaut.version.application.key.id }}">{{ defaut.version.application.nom }}</a> <a href="/version/{{ defaut.version.key.id }}">{{ defaut.version.numero }}</a></p>
+<p>Test : <a href="/test/{{ defaut.test.key.id }}">{{ defaut.test.nom }}</a></p>
+
+{% if defaut.commentaire %}
+<p>{% autoescape off %}{{ defaut.commentaire }}{% endautoescape %}</p>
+{% endif %}
+
+{% if admin %}
+<p class="submit"><a href="/editDefaut?id={{ defaut.key.id }}">Editer</a></p>
+{% endif %}
+
+<div class="ink-tabs top"> <!-- Creates a tabbed view with top nav -->
+  <ul class="tabs-nav">
+    <li><a href="#redaction">R&eacute;daction</a></li>
+    <li><a href="#analyse">Analyse</a></li>
+    <li><a href="#arbitrage">Arbitrage</a></li>
+    <li><a href="#correction">Correction</a></li>
+    <li><a href="#validation">Validation</a></li>
+    <li><a href="#historique">Historique</a></li>
+  </ul>
+
+  <div id="redaction" class="tabs-content">
+  </div>
+  <div id="analyse" class="tabs-content">
+  </div>
+  <div id="arbitrage" class="tabs-content">
+  </div>
+  <div id="correction" class="tabs-content">
+  </div>
+  <div id="validation" class="tabs-content">
+  </div>
+  <div id="historique" class="tabs-content">
+   {% if defaut.historique %}
+   <p>{% autoescape off %}{{ defaut.historique }}{% endautoescape %}</p>
+   {% endif %}
+  </div>
+</div>
+
+{% endif %}
+{% endblock %}

@@ -357,6 +357,44 @@ class AddTest(BaseRequestHandler):
     logging.debug('Finish test adding')
     self.redirect('/version/%s#tests' % v)
 
+class AddDefaut(BaseRequestHandler):
+  def post(self):
+    logging.debug('Start defaut adding request')
+    c = self.request.get('code')
+    m = self.request.get('commentaire')
+    v = self.request.get('id')
+    t = self.request.get('test')
+    obj = Defaut(code=c,commentaire=m,historique='')
+
+    user = users.GetCurrentUser()
+    if user:
+      logging.info('Defaut %s added by user %s' % (c, user.nickname()))
+      obj.created_by = user
+      obj.updated_by = user
+    else:
+      logging.info('Defaut %s added by anonymous user' % c)
+
+    try:
+      i = int(v)
+      version = VersionApplication.get(db.Key.from_path('VersionApplication', i))
+      obj.version = version
+    except:
+      logging.error('There was an error retreiving version %s' % v)
+
+    try:
+      i = int(t)
+      test = Test.get(db.Key.from_path('Test', i))
+      obj.test = test
+    except:
+      logging.error('There was an error retreiving test %s' % t)
+
+    try:
+      obj.put()
+    except:
+      logging.error('There was an error adding defaut %s' % c)
+    logging.debug('Finish defaut adding')
+    self.redirect('/version/%s#defauts' % v)
+
 class AddCategorieDemande(BaseRequestHandler):
   def post(self):
     logging.debug('Start categorie demande adding request')
@@ -1266,7 +1304,7 @@ class ViewDefaut(BaseRequestHandler):
       self.error(403)
       return
     else:
-      title = defaut.nom
+      title = defaut.code
     template_values = {
       'title': title,
       'defaut': defaut

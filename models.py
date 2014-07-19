@@ -238,8 +238,8 @@ class Test(Objet):
     return self.nom
 
 class Defaut(Objet):
-  test = db.ReferenceProperty(Test)
-  version = db.ReferenceProperty(VersionApplication)
+  test = db.ReferenceProperty(Test, collection_name='defauts')
+  version = db.ReferenceProperty(VersionApplication, collection_name='defauts')
   code = db.StringProperty()
   gravite = db.StringProperty()
   nature = db.StringProperty()

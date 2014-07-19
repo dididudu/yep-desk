@@ -17,6 +17,7 @@ from actions import AddCategorieIncident
 from actions import AddCommentaireDemande
 from actions import AddCommentaireIncident
 from actions import AddContact
+from actions import AddDefaut
 from actions import AddDemande
 from actions import AddEtatDemande
 from actions import AddEtatIncident
@@ -170,6 +171,7 @@ application = webapp2.WSGIApplication([
   ('/editDemande', EditDemande),
   ('/demande/([-\w]+)', ViewDemande),
   ('/demandes', ListDemandes),
+  ('/addDefaut', AddDefaut),
   ('/defaut/([-\w]+)', ViewDefaut),
   ('/defauts', ListDefauts),
   ('/addEtatDemande', AddEtatDemande),
