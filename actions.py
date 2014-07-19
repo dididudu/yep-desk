@@ -138,6 +138,79 @@ class ImportMateriel(BaseRequestHandler):
 
     self.generate('result.html', template_values)
 
+class AddTransfert(webapp2.RequestHandler):
+  def post(self):
+    logging.debug('Start transfert adding request')
+    i = self.request.get('id')
+    t = self.request.get('type')
+    g = self.request.get('groupe')
+    txt = self.request.get('texte')
+
+    obj = None
+
+    if t == 'Incident':
+      try:
+        id = int(i)
+        obj = Incident.get(db.Key.from_path('Incident', id))
+      except:
+        obj = None
+        logging.error('There was an error retreiving incident from the datastore')
+    else:
+      try:
+        id = int(i)
+        obj = Demande.get(db.Key.from_path('Demande', id))
+      except:
+        obj = None
+        logging.error('There was an error retreiving incident from the datastore')
+
+    groupe = None
+
+    try:
+      id = int(g)
+      groupe = Groupe.get(db.Key.from_path('Groupe', id))
+    except:
+      groupe = None
+      logging.error('There was an error retreiving groupe from the datastore')
+
+    if obj:
+      old_groupe = obj.affecte
+      if groupe:
+        obj.affecte = groupe
+        user = users.GetCurrentUser()
+        if user:
+          obj.updated_by = user
+        try:
+          obj.put()
+        except:
+          logging.error('There was an error updating %s %d' % (t, i))
+
+        com1 = None
+        com2 = None
+
+        if user:
+          com = 'Transfert de %s vers %s par %s' % (old_groupe.nom, groupe.nom, user.nickname())
+          if t == 'Incident':
+            com1 = CommentaireIncident(incident=obj,texte=com)
+            com2 = CommentaireIncident(incident=obj,texte=txt)
+          else:
+            com1 = CommentaireDemande(demande=obj,texte=com)
+            com2 = CommentaireDemande(demande=obj,texte=txt)
+          com1.created_by = user
+          com1.updated_by = user
+          com2.created_by = user
+          com2.updated_by = user
+          try:
+            com1.put()
+            com2.put()
+          except:
+            logging.error('There was an error adding transfert comments')
+
+    logging.debug('Finish transfert adding')
+    if t == 'Incident':
+      self.redirect('/incident/%s' % i)
+    else:
+      self.redirect('/demande/%s' % i)
+
 class AddMembre2Groupe(webapp2.RequestHandler):
   def post(self):
     logging.debug('Start groupe membre adding request')
@@ -1496,12 +1569,15 @@ class ViewDemande(BaseRequestHandler):
   def get(self, arg):
     title = 'Demande introuvable'
     demande = None
+    groupes = []
     # Get and displays the demande informations
     try:
       id = int(arg)
       demande = Demande.get(db.Key.from_path('Demande', id))
+      groupes = Groupe.gql("ORDER BY nom")
     except:
       demande = None
+      groupes = []
       logging.error('There was an error retreiving demande and its informations from the datastore')
     if not demande:
       self.error(403)
@@ -1510,7 +1586,8 @@ class ViewDemande(BaseRequestHandler):
       title = demande.reference
     template_values = {
       'title': title,
-      'demande': demande
+      'demande': demande,
+      'groupes': groupes
     }
     self.generate('demande.html', template_values)
 
@@ -1518,12 +1595,15 @@ class ViewIncident(BaseRequestHandler):
   def get(self, arg):
     title = 'Incident introuvable'
     incident = None
+    groupes = []
     # Get and displays the incident informations
     try:
       id = int(arg)
       incident = Incident.get(db.Key.from_path('Incident', id))
+      groupes = Groupe.gql("ORDER BY nom")
     except:
       incident = None
+      groupes = []
       logging.error('There was an error retreiving incident and its informations from the datastore')
     if not incident:
       self.error(403)
@@ -1532,7 +1612,8 @@ class ViewIncident(BaseRequestHandler):
       title = incident.reference
     template_values = {
       'title': title,
-      'incident': incident
+      'incident': incident,
+      'groupes': groupes
     }
     self.generate('incident.html', template_values)
 

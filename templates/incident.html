@@ -48,6 +48,7 @@
     <li><a href="#item1">Ajout de commentaire</a></li>
 {% endif %}
     <li><a href="#item2">Pi&egrave;ces jointes</a></li>
+    <li><a href="#item3">Transfert</a></li>
   </ul>
 
     <div id="item0" class="tabs-content">
@@ -91,6 +92,30 @@
 
     <div id="item2" class="tabs-content">
      <p>Pas de pi&egrave;ces jointes.</p>
+    </div>
+
+    <div id="item3" class="tabs-content">
+     <form action="/addTransfert" method="post">
+      <input type="hidden" name="id" value="{{ incident.key.id }}" />
+      <input type="hidden" name="type" value="Incident" />
+      <table class="form" cellpadding="5">
+       <tr>
+        <td><label>Groupe</label> :
+         <select name="groupe">
+         {% for g in groupes %}
+          <option value="{{ g.key.id }}">{{ g.nom }}</option>
+         {% endfor %}
+         </select>
+        </td>
+       </tr>
+       <tr>
+        <td><textarea name="texte" rows="4" cols="48"></textarea></td>
+       </tr>
+       <tr>
+        <td align="center"><input class="submit" type="submit" value="Transf&eacute;rer"/></td>
+       </tr>
+      </table>
+     </form>
     </div>
 
 </div>
