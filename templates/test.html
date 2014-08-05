@@ -10,6 +10,8 @@
 
 <p>Version : <a href="/application/{{ test.version.application.key.id }}">{{ test.version.application.nom }}</a> <a href="/version/{{ test.version.key.id }}">{{ test.version.numero }}</a></p>
 <p>Fiche : <a href="/fiche/{{ test.fiche.key.id }}">{{ test.fiche.nom }}</a></p>
+<p>Date : {{ test.quand|date:"j/m/y" }}</p>
+<p>R&eacute;sultat : {{ test.resultat }}</p>
 
 {% if test.commentaire %}
 <p>{% autoescape off %}{{ test.commentaire }}{% endautoescape %}</p>
