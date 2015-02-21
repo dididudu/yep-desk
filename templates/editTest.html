@@ -52,7 +52,7 @@
         <div class="control-group large-50 medium-50 small-100">
           {{ form.quand.label }}
           <div class="control">
-            {{ form.quand }}
+            {{ form.quand(class="ink-datepicker) }}
           </div>
           {% if form.quand.errors %}<p class="tip">{{form.quand.errors}}</p>{% endif %}
         </div>
